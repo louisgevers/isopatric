@@ -1,2 +1,2 @@
-# isopatric
+# IsoPatric
 The 2D isometric game engine.
