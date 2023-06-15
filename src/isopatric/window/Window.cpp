@@ -1,15 +1,15 @@
 //
 // Created by Louis Gevers on 14/06/2023.
 //
-#include <cstdio>
-#include "window.h"
+#include "Window.h"
+#include <isopatric/core/Log.h>
 
 namespace isopatric::window {
     Window::Window() {
-        printf("Hello window.\n");
+        LOG_DEBUG("Hello window");
     }
 
     Window::~Window() {
-        printf("Goodbye window.\n");
+        LOG_DEBUG("Goodbye window.");
     }
 }
