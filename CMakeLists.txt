@@ -12,8 +12,14 @@ set(ISOPATRIC_LIB_NAME libisopatric)
 
 # IsoPatric library source files
 set(ISOPATRIC_LIB_SRC 
+        src/isopatric/core/Application.cpp
+        src/isopatric/core/Application.h
         src/isopatric/core/Log.cpp
         src/isopatric/core/Log.h
+        src/isopatric/event/Event.h
+        src/isopatric/event/KeyEvent.h
+        src/isopatric/event/MouseEvent.h
+        src/isopatric/event/WindowEvent.h
         src/isopatric/window/Window.cpp
         src/isopatric/window/Window.h
     )

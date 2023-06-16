@@ -2,6 +2,7 @@
 #define ISOPATRIC_CORE_LOG_H
 
 #include <spdlog/spdlog.h>
+#include <spdlog/fmt/ostr.h>
 
 namespace isopatric::core
 {
