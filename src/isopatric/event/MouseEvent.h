@@ -2,7 +2,6 @@
 #define ISOPATRIC_EVENT_MOUSEEVENT_H
 
 #include "Event.h"
-#include <sstream>
 
 namespace isopatric::event
 {

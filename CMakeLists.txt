@@ -34,6 +34,9 @@ include_directories(src)
 add_library(${ISOPATRIC_LIB_NAME} ${ISOPATRIC_LIB_SRC})
 target_include_directories(${ISOPATRIC_LIB_NAME} PUBLIC ${ISOPATRIC_EXTERNAL_INCLUDES})
 
+# Add the precompiled header
+target_precompile_headers(${ISOPATRIC_LIB_NAME} PRIVATE src/isopatric/pch.h)
+
 # Create the IsoPatric executable and link the library
 add_executable(${ISOPATRIC_EXE_NAME} src/isopatric/isopatric.cpp)
 target_link_libraries(${ISOPATRIC_EXE_NAME} ${ISOPATRIC_LIB_NAME})
