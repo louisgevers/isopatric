@@ -1,21 +1,33 @@
-cmake_minimum_required(VERSION 3.25)
+cmake_minimum_required(VERSION 3.15)
 project(isopatric)
 
+# Require C++ 17
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# IsoPatric library sources
-set(ISOPATRIC_LIB_NAME isopatriclib)
-set(ISOPATRIC_LIB_SRC
+# Name of the IsoPatric executable
+set(ISOPATRIC_EXE_NAME isopatric)
+# Name of the IsoPatric library source code
+set(ISOPATRIC_LIB_NAME libisopatric)
+
+# IsoPatric library source files
+set(ISOPATRIC_LIB_SRC 
         src/isopatric/core/Log.cpp
         src/isopatric/core/Log.h
         src/isopatric/window/Window.cpp
-        src/isopatric/window/Window.h)
-set(ISOPATRIC_LIB_INCLUDES external/spdlog/include)
+        src/isopatric/window/Window.h
+    )
 
-# Executables
-add_executable(${PROJECT_NAME} src/isopatric/isopatric.cpp)
+# External includes for the library source files
+set(ISOPATRIC_EXTERNAL_INCLUDES external/spdlog/include)
 
-# Add the IsoPatric library
-include_directories(src ${ISOPATRIC_LIB_INCLUDES})
+# Include header files for all project
+include_directories(src)
+
+# Create the IsoPatric library with its include dependencies
 add_library(${ISOPATRIC_LIB_NAME} ${ISOPATRIC_LIB_SRC})
-target_link_libraries(${PROJECT_NAME} PRIVATE ${ISOPATRIC_LIB_NAME})
+target_include_directories(${ISOPATRIC_LIB_NAME} PUBLIC ${ISOPATRIC_EXTERNAL_INCLUDES})
+
+# Create the IsoPatric executable and link the library
+add_executable(${ISOPATRIC_EXE_NAME} src/isopatric/isopatric.cpp)
+target_link_libraries(${ISOPATRIC_EXE_NAME} ${ISOPATRIC_LIB_NAME})

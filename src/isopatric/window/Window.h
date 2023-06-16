@@ -1,12 +1,10 @@
-//
-// Created by Louis Gevers on 14/06/2023.
-//
+#ifndef ISOPATRIC_WINDOW_WINDOW_H
+#define ISOPATRIC_WINDOW_WINDOW_H
 
-#ifndef ISOPATRIC_WINDOW_H
-#define ISOPATRIC_WINDOW_H
-
-namespace isopatric::window {
-    class Window {
+namespace isopatric::window
+{
+    class Window
+    {
     public:
         Window();
 
@@ -14,4 +12,4 @@ namespace isopatric::window {
     };
 }
 
-#endif //ISOPATRIC_WINDOW_H
+#endif // ISOPATRIC_WINDOW_WINDOW_H

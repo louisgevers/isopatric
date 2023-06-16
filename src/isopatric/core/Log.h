@@ -1,18 +1,17 @@
-//
-// Created by Louis Gevers on 15/06/2023.
-//
-
-#ifndef ISOPATRIC_LOG_H
-#define ISOPATRIC_LOG_H
+#ifndef ISOPATRIC_CORE_LOG_H
+#define ISOPATRIC_CORE_LOG_H
 
 #include <spdlog/spdlog.h>
 
-namespace isopatric::core {
-    class Log {
+namespace isopatric::core
+{
+    class Log
+    {
     public:
         static void init();
 
-        inline static std::shared_ptr<spdlog::logger> &getLogger() {
+        inline static std::shared_ptr<spdlog::logger> &getLogger()
+        {
             return mLogger;
         }
 
@@ -26,4 +25,4 @@ namespace isopatric::core {
 #define LOG_WARN(...) isopatric::core::Log::getLogger()->warn(__VA_ARGS__)
 #define LOG_ERROR(...) isopatric::core::Log::getLogger()->error(__VA_ARGS__)
 
-#endif //ISOPATRIC_LOG_H
+#endif // ISOPATRIC_CORE_LOG_H

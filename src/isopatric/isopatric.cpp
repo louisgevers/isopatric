@@ -1,10 +1,8 @@
-//
-// Created by Louis Gevers on 14/06/2023.
-//
-#include "core/Log.h"
-#include "window/Window.h"
+#include <isopatric/core/Log.h>
+#include <isopatric/window/Window.h>
 
-int main() {
+int main()
+{
     isopatric::core::Log::init();
     isopatric::window::Window window{};
 }
