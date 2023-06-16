@@ -1,8 +1,7 @@
 #ifndef ISOPATRIC_EVENT_EVENT_H
 #define ISOPATRIC_EVENT_EVENT_H
 
-// TODO should be in base header
-#define BIT(x) (1 << x)
+#include <isopatric/core/Base.h>
 
 #define EVENT_CLASS_TYPE(type)                                          \
     EventType getEventType() const override { return EventType::type; } \

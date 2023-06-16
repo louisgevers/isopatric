@@ -1,12 +1,14 @@
 #include "Application.h"
 #include <isopatric/core/Log.h>
-#include <isopatric/event/WindowEvent.h>
+#include <isopatric/window/Window.h>
 
 namespace isopatric::core
 {
     Application::Application()
     {
-        LOG_DEBUG("Application created");
+        LOG_DEBUG("Creating application");
+        isopatric::window::WindowProps props{"Isopatric", 640, 480};
+        mWindow = isopatric::window::Window::create(props);
     }
 
     Application::~Application()
@@ -16,8 +18,5 @@ namespace isopatric::core
 
     void Application::run()
     {
-        LOG_DEBUG("Application running");
-        isopatric::event::WindowResizeEvent e{1240, 1080};
-        LOG_DEBUG(e);
     }
 }

@@ -4,4 +4,6 @@
 #include <string>
 #include <sstream>
 
+#include <memory>
+
 #endif // ISOPATRIC_PCH_H
