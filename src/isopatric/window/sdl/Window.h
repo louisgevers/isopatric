@@ -8,7 +8,7 @@
 
 namespace isopatric::window
 {
-    class SDLWindow : public isopatric::window::Window
+    class SDLWindow : public Window
     {
     public:
         SDLWindow(WindowProps &props);

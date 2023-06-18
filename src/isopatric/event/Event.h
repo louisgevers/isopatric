@@ -31,7 +31,7 @@ namespace isopatric::event
 
     enum EventCategory
     {
-        None = 0,
+        EventCategoryNone = 0,
         EventCategoryWindow = BIT(0),
         EventCategoryInput = BIT(1),
         EventCategoryKeyboard = BIT(2),
@@ -43,10 +43,19 @@ namespace isopatric::event
     public:
         bool handled = false;
 
+        virtual ~Event() = default;
+
         virtual EventType getEventType() const = 0;
         virtual int getEventCategories() const = 0;
         virtual const char *getEventName() const = 0;
         virtual std::string toString() const { return getEventName(); }
+    };
+
+    class UnknownEvent : public Event
+    {
+    public:
+        EVENT_CLASS_TYPE(None)
+        EVENT_CLASS_CATEGORIES(EventCategoryNone)
     };
 
     // Formatter for logging

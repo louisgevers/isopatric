@@ -3,6 +3,7 @@
 
 #include <isopatric/core/Base.h>
 #include <isopatric/window/Window.h>
+#include <isopatric/event/EventQueue.h>
 
 namespace isopatric::core
 {
@@ -14,7 +15,9 @@ namespace isopatric::core
         void run();
 
     private:
+        bool mRunning;
         Scope<isopatric::window::Window> mWindow;
+        Scope<isopatric::event::EventQueue> mEventQueue;
     };
 }
 #endif // ISOPATRIC_CORE_APPLICATION_H

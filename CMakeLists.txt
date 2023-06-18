@@ -22,6 +22,9 @@ set(ISOPATRIC_LIB_SRC
         src/isopatric/core/Log.cpp
         src/isopatric/core/Log.h
         src/isopatric/event/Event.h
+        src/isopatric/event/EventQueue.h
+        src/isopatric/event/sdl/EventQueue.cpp
+        src/isopatric/event/sdl/EventQueue.h
         src/isopatric/event/KeyEvent.h
         src/isopatric/event/MouseEvent.h
         src/isopatric/event/WindowEvent.h

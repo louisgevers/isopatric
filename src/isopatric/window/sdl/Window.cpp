@@ -6,7 +6,6 @@
 
 #include <SDL2/SDL.h>
 
-// TODO SDL specific code in SDL subclass
 namespace isopatric::window
 {
     Scope<Window> Window::create(WindowProps &props)
@@ -19,7 +18,8 @@ namespace isopatric::window
         int success = SDL_InitSubSystem(SDL_INIT_VIDEO);
         ASSERT(success == 0, "Could not initialize SDL: {}", SDL_GetError());
 
-        mWindow = SDL_CreateWindow(props.title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, props.width, props.height, SDL_WINDOW_SHOWN);
+        auto flags = SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE;
+        mWindow = SDL_CreateWindow(props.title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, props.width, props.height, flags);
         ASSERT(mWindow != nullptr, "Could not create SDL window: {}", SDL_GetError());
     }
 
