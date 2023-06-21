@@ -5,5 +5,7 @@
 #include <sstream>
 
 #include <memory>
+#include <variant>
+#include <functional>
 
 #endif // ISOPATRIC_PCH_H

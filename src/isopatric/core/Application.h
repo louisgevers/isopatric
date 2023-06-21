@@ -4,6 +4,7 @@
 #include <isopatric/core/Base.h>
 #include <isopatric/window/Window.h>
 #include <isopatric/event/EventQueue.h>
+#include <isopatric/event/WindowEvent.h>
 
 namespace isopatric::core
 {
@@ -13,6 +14,9 @@ namespace isopatric::core
         Application();
         ~Application();
         void run();
+        void eventLoop();
+
+        bool onWindowClose(isopatric::event::WindowCloseEvent &event);
 
     private:
         bool mRunning;

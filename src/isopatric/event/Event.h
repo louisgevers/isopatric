@@ -4,6 +4,7 @@
 #include <isopatric/core/Base.h>
 
 #define EVENT_CLASS_TYPE(type)                                          \
+    static EventType getStaticType() { return EventType::type; }        \
     EventType getEventType() const override { return EventType::type; } \
     const char *getEventName() const override { return #type; }
 
@@ -49,6 +50,29 @@ namespace isopatric::event
         virtual int getEventCategories() const = 0;
         virtual const char *getEventName() const = 0;
         virtual std::string toString() const { return getEventName(); }
+    };
+
+    class EventDispatcher
+    {
+    public:
+        EventDispatcher(Event &event) : mEvent(event) {}
+
+        template <typename T, typename F>
+        bool dispatch(const F &callback)
+        {
+            if (mEvent.getEventType() == T::getStaticType())
+            {
+                mEvent.handled |= callback(static_cast<T &>(mEvent));
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+    private:
+        Event &mEvent;
     };
 
     class UnknownEvent : public Event

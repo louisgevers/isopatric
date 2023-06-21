@@ -23,18 +23,31 @@ namespace isopatric::core
     {
         while (mRunning)
         {
-            // TODO: event loop in separate function once dispatch
-            while (true)
+            eventLoop();
+        }
+    }
+
+    void Application::eventLoop()
+    {
+        while (true)
+        {
+            auto event = mEventQueue->poll();
+            if (event)
             {
-                auto event = mEventQueue->poll();
-                BREAK_IF_NOT(event)
                 LOG_DEBUG(*event);
-                // TODO dispatch
-                if (event->getEventType() == isopatric::event::EventType::WindowClose)
-                {
-                    mRunning = false;
-                }
+                isopatric::event::EventDispatcher dispatch{*event};
+                dispatch.dispatch<isopatric::event::WindowCloseEvent>(BIND_FN(onWindowClose));
+            }
+            else
+            {
+                return;
             }
         }
+    }
+
+    bool Application::onWindowClose(isopatric::event::WindowCloseEvent &event)
+    {
+        mRunning = false;
+        return true;
     }
 }
