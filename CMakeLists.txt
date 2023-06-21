@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.16)
 project(isopatric)
 
 # Require C++ 17
@@ -55,3 +55,4 @@ target_precompile_headers(${ISOPATRIC_LIB_NAME} PRIVATE src/isopatric/pch.h)
 # Create the IsoPatric executable and link the library
 add_executable(${ISOPATRIC_EXE_NAME} src/isopatric/isopatric.cpp)
 target_link_libraries(${ISOPATRIC_EXE_NAME} ${ISOPATRIC_LIB_NAME})
+target_precompile_headers(${ISOPATRIC_EXE_NAME} REUSE_FROM ${ISOPATRIC_LIB_NAME})
