@@ -49,22 +49,6 @@ namespace isopatric::event
 
         EVENT_CLASS_TYPE(KeyReleased)
     };
-
-    class KeyTypedEvent : public KeyEvent
-    {
-    public:
-        KeyTypedEvent(int keyCode)
-            : KeyEvent(keyCode) {}
-
-        std::string toString() const override
-        {
-            std::stringstream ss;
-            ss << "KeyTyped: " << mKeyCode;
-            return ss.str();
-        }
-
-        EVENT_CLASS_TYPE(KeyTyped)
-    };
 }
 
 #endif // ISOPATRIC_EVENT_KEYEVENT_H

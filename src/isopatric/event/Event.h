@@ -23,7 +23,6 @@ namespace isopatric::event
         WindowMoved,
         KeyPressed,
         KeyReleased,
-        KeyTyped,
         MouseButtonPressed,
         MouseButtonReleased,
         MouseMoved,

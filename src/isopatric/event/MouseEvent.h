@@ -12,22 +12,24 @@ namespace isopatric::event
 
         EVENT_CLASS_CATEGORIES(EventCategoryInput | EventCategoryMouse)
     protected:
-        MouseButtonEvent(int mouseButton)
-            : mMouseButton(mouseButton) {}
+        MouseButtonEvent(int mouseButton, float x, float y)
+            : mMouseButton(mouseButton), mMouseX(x), mMouseY(y) {}
 
         int mMouseButton;
+        float mMouseX;
+        float mMouseY;
     };
 
     class MouseButtonPressedEvent : public MouseButtonEvent
     {
     public:
-        MouseButtonPressedEvent(int mouseButton)
-            : MouseButtonEvent(mouseButton) {}
+        MouseButtonPressedEvent(int mouseButton, float x, float y)
+            : MouseButtonEvent(mouseButton, x, y) {}
 
         std::string toString() const override
         {
             std::stringstream ss;
-            ss << "MouseButtonPressed: " << mMouseButton;
+            ss << "MouseButtonPressed: " << mMouseButton << " at " << mMouseX << ", " << mMouseY;
             return ss.str();
         }
 
@@ -37,13 +39,13 @@ namespace isopatric::event
     class MouseButtonReleasedEvent : public MouseButtonEvent
     {
     public:
-        MouseButtonReleasedEvent(int mouseButton)
-            : MouseButtonEvent(mouseButton) {}
+        MouseButtonReleasedEvent(int mouseButton, float x, float y)
+            : MouseButtonEvent(mouseButton, x, y) {}
 
         std::string toString() const override
         {
             std::stringstream ss;
-            ss << "MouseButtonReleased: " << mMouseButton;
+            ss << "MouseButtonReleased: " << mMouseButton << " at " << mMouseX << ", " << mMouseY;
             return ss.str();
         }
 
