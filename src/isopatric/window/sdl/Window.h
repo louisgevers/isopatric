@@ -8,15 +8,16 @@
 
 namespace isopatric::window
 {
-    class SDLWindow : public Window
-    {
-    public:
-        SDLWindow(WindowProps &props);
-        ~SDLWindow();
+	class SDLWindow : public Window
+	{
+	 public:
+		SDLWindow(WindowProps& props);
+		~SDLWindow();
 
-    private:
-        SDL_Window *mWindow;
-    };
+	 private:
+		SDL_Window* mWindow;
+		SDL_GLContext mGLContext;
+	};
 }
 
 #endif // ISOPATRIC_WINDOW_SDL_WINDOW_H

@@ -10,11 +10,14 @@ set(ISOPATRIC_EXE_NAME isopatric)
 # Name of the IsoPatric library source code
 set(ISOPATRIC_LIB_NAME libisopatric)
 
-# --- SDL2 ---
+# --- SDL2 ---
 find_package(SDL2 REQUIRED)
+# --- GLAD ---
+add_library(glad external/glad/src/glad.c)
+target_include_directories(glad PRIVATE external/glad/include)
 
 # IsoPatric library source files
-set(ISOPATRIC_LIB_SRC 
+set(ISOPATRIC_LIB_SRC
         src/isopatric/core/Application.cpp
         src/isopatric/core/Application.h
         src/isopatric/core/Assert.h
@@ -34,15 +37,16 @@ set(ISOPATRIC_LIB_SRC
         src/isopatric/window/Window.h
         src/isopatric/window/sdl/Window.cpp
         src/isopatric/window/sdl/Window.h
-    )
+        )
 
 # External includes for the library source files
-set(ISOPATRIC_EXTERNAL_INCLUDES 
+set(ISOPATRIC_EXTERNAL_INCLUDES
         external/spdlog/include
+        external/glad/include
         ${SDL2_INCLUDE_DIRS})
 
 # External libraries
-set(ISOPATRIC_EXTERNAL_LIBRARIES ${SDL2_LIBRARIES})
+set(ISOPATRIC_EXTERNAL_LIBRARIES ${SDL2_LIBRARIES} glad)
 
 # Include header files for all project
 include_directories(src)

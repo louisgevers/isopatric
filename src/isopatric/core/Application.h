@@ -9,21 +9,21 @@
 
 namespace isopatric::core
 {
-    class Application
-    {
-    public:
-        Application();
-        ~Application();
-        void run();
-        void eventLoop();
+	class Application
+	{
+	 public:
+		Application();
+		~Application();
+		void run();
+		void eventLoop();
 
-        bool onWindowClose(isopatric::event::WindowCloseEvent &event);
+		bool onWindowClose(isopatric::event::WindowCloseEvent& event);
 
-    private:
-        bool mRunning;
-        isopatric::core::LayerStack mLayerStack;
-        Scope<isopatric::window::Window> mWindow;
-        Scope<isopatric::event::EventQueue> mEventQueue;
-    };
+	 private:
+		bool mRunning;
+		isopatric::core::LayerStack mLayerStack;
+		Scope<isopatric::window::Window> mWindow;
+		Scope<isopatric::event::EventQueue> mEventQueue;
+	};
 }
 #endif // ISOPATRIC_CORE_APPLICATION_H
