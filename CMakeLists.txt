@@ -19,6 +19,9 @@ set(ISOPATRIC_LIB_SRC
         src/isopatric/core/Application.h
         src/isopatric/core/Assert.h
         src/isopatric/core/Base.h
+        src/isopatric/core/Layer.h
+        src/isopatric/core/LayerStack.cpp
+        src/isopatric/core/LayerStack.h
         src/isopatric/core/Log.cpp
         src/isopatric/core/Log.h
         src/isopatric/event/Event.h

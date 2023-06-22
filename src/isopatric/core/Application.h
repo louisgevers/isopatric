@@ -2,6 +2,7 @@
 #define ISOPATRIC_CORE_APPLICATION_H
 
 #include <isopatric/core/Base.h>
+#include <isopatric/core/LayerStack.h>
 #include <isopatric/window/Window.h>
 #include <isopatric/event/EventQueue.h>
 #include <isopatric/event/WindowEvent.h>
@@ -20,6 +21,7 @@ namespace isopatric::core
 
     private:
         bool mRunning;
+        isopatric::core::LayerStack mLayerStack;
         Scope<isopatric::window::Window> mWindow;
         Scope<isopatric::event::EventQueue> mEventQueue;
     };
