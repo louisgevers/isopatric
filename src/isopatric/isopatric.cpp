@@ -3,9 +3,9 @@
 
 int main()
 {
-    isopatric::core::Log::init();
+	isopatric::core::Log::init();
 
-    auto application = new isopatric::core::Application();
-    application->run();
-    delete application;
+	auto application = isopatric::core::createApplication();
+	application->run();
+	delete application;
 }

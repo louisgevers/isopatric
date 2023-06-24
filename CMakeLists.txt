@@ -15,9 +15,31 @@ find_package(SDL2 REQUIRED)
 # --- GLAD ---
 add_library(glad external/glad/src/glad.c)
 target_include_directories(glad PRIVATE external/glad/include)
+# --- IMGUI ---
+set(EXTERNAL_IMGUI_SRC
+        external/imgui/imconfig.h
+        external/imgui/imgui.cpp
+        external/imgui/imgui.h
+        external/imgui/imgui_demo.cpp
+        external/imgui/imgui_draw.cpp
+        external/imgui/imgui_internal.h
+        external/imgui/imgui_tables.cpp
+        external/imgui/imgui_widgets.cpp
+        external/imgui/imstb_rectpack.h
+        external/imgui/imstb_textedit.h
+        external/imgui/imstb_truetype.h
+        external/imgui/backends/imgui_impl_opengl3.cpp
+        external/imgui/backends/imgui_impl_opengl3.h
+        external/imgui/backends/imgui_impl_sdl2.cpp
+        external/imgui/backends/imgui_impl_sdl2.h
+        )
+add_library(imgui ${EXTERNAL_IMGUI_SRC})
+target_link_libraries(imgui PRIVATE ${SDL2_LIBRARIES})
+target_include_directories(imgui PRIVATE external/imgui ${SDL2_INCLUDE_DIR})
 
 # IsoPatric library source files
 set(ISOPATRIC_LIB_SRC
+        src/isopatric/isopatric.h
         src/isopatric/core/Application.cpp
         src/isopatric/core/Application.h
         src/isopatric/core/Assert.h
@@ -34,25 +56,32 @@ set(ISOPATRIC_LIB_SRC
         src/isopatric/event/KeyEvent.h
         src/isopatric/event/MouseEvent.h
         src/isopatric/event/WindowEvent.h
+        src/isopatric/ui/UILayer.cpp
+        src/isopatric/ui/UILayer.h
         src/isopatric/window/Window.h
         src/isopatric/window/sdl/Window.cpp
         src/isopatric/window/sdl/Window.h
         )
 
+# Isopatric playground files
+set(ISOPATRIC_PLAYGROUND_SRC
+        src/playground/playground.cpp)
+
 # External includes for the library source files
 set(ISOPATRIC_EXTERNAL_INCLUDES
         external/spdlog/include
         external/glad/include
+        external/imgui
         ${SDL2_INCLUDE_DIRS})
 
 # External libraries
-set(ISOPATRIC_EXTERNAL_LIBRARIES ${SDL2_LIBRARIES} glad)
+set(ISOPATRIC_EXTERNAL_LIBRARIES ${SDL2_LIBRARIES} glad imgui)
 
 # Include header files for all project
 include_directories(src)
 
-# Create the IsoPatric library with its include dependencies
-add_library(${ISOPATRIC_LIB_NAME} ${ISOPATRIC_LIB_SRC})
+# Create the Isopatric library with its include dependencies
+add_library(${ISOPATRIC_LIB_NAME} ${ISOPATRIC_LIB_SRC} ${ISOPATRIC_PLAYGROUND_SRC}) # TODO playground should be different lib
 target_include_directories(${ISOPATRIC_LIB_NAME} PUBLIC ${ISOPATRIC_EXTERNAL_INCLUDES})
 target_link_libraries(${ISOPATRIC_LIB_NAME} ${ISOPATRIC_EXTERNAL_LIBRARIES})
 

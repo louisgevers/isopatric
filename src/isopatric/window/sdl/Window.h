@@ -3,6 +3,8 @@
 
 #include <isopatric/core/Base.h>
 #include <isopatric/window/Window.h>
+#include <isopatric/event/Event.h>
+#include <isopatric/event/WindowEvent.h>
 
 #include <SDL2/SDL.h>
 
@@ -12,9 +14,13 @@ namespace isopatric::window
 	{
 	 public:
 		SDLWindow(WindowProps& props);
-		~SDLWindow();
+		~SDLWindow() override;
+
+		void onUpdate() override;
+		void onEvent(event::Event& event);
 
 	 private:
+		bool onWindowResize(event::WindowResizeEvent& event);
 		SDL_Window* mWindow;
 		SDL_GLContext mGLContext;
 	};

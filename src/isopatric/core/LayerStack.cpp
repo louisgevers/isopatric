@@ -15,11 +15,13 @@ namespace isopatric::core
 	{
 		mLayers.emplace(mLayers.begin() + mOverlayIndex, layer);
 		mOverlayIndex++;
+		layer->onAttach();
 	}
 
 	void LayerStack::pushOverlay(Layer* layer)
 	{
 		mLayers.emplace_back(layer);
+		layer->onAttach();
 	}
 
 	void LayerStack::popLayer(Layer* layer)

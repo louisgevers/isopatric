@@ -17,13 +17,24 @@ namespace isopatric::core
 		void run();
 		void eventLoop();
 
-		bool onWindowClose(isopatric::event::WindowCloseEvent& event);
+		bool onWindowClose(event::WindowCloseEvent& event);
 
+		void pushLayer(Layer* layer);
+		void pushOverlay(Layer* layer);
+
+		inline window::Window& getWindow() { return *mWindow; }
+
+		inline static Application& get() { return *sInstance; }
 	 private:
 		bool mRunning;
-		isopatric::core::LayerStack mLayerStack;
-		Scope<isopatric::window::Window> mWindow;
-		Scope<isopatric::event::EventQueue> mEventQueue;
+		core::LayerStack mLayerStack;
+		Scope<window::Window> mWindow;
+		Scope<event::EventQueue> mEventQueue;
+
+		static Application* sInstance;
 	};
+
+	// Client hook
+	Application* createApplication();
 }
 #endif // ISOPATRIC_CORE_APPLICATION_H

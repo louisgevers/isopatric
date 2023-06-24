@@ -1,8 +1,6 @@
 #include "Window.h"
 
-#include <isopatric/core/Assert.h>
-#include <isopatric/core/Log.h>
-#include <isopatric/window/Window.h>
+#include "Window.h"
 
 #include <SDL2/SDL.h>
 #include <glad/glad.h>
@@ -16,6 +14,9 @@ namespace isopatric::window
 
 	SDLWindow::SDLWindow(WindowProps& props)
 	{
+		mWidth = props.width;
+		mHeight = props.height;
+
 		int success = SDL_InitSubSystem(SDL_INIT_VIDEO);
 		ASSERT(success == 0, "Could not initialize SDL: {}", SDL_GetError());
 
@@ -28,6 +29,8 @@ namespace isopatric::window
 			flags);
 		ASSERT(mWindow != nullptr, "Could not create SDL window: {}", SDL_GetError());
 
+		// Needed for higher versions of OpenGL on MacOS
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 		mGLContext = SDL_GL_CreateContext(mWindow);
 		ASSERT(mGLContext != nullptr, "Could not create SDL GL context: {}", SDL_GetError());
 		SDL_GL_MakeCurrent(mWindow, mGLContext);
@@ -50,4 +53,24 @@ namespace isopatric::window
 		SDL_QuitSubSystem(SDL_INIT_VIDEO);
 	}
 
+	void SDLWindow::onUpdate()
+	{
+		SDL_GL_SwapWindow(mWindow);
+	}
+
+	void SDLWindow::onEvent(event::Event& event)
+	{
+		event::EventDispatcher dispatch{ event };
+		dispatch.dispatch<event::WindowResizeEvent>(BIND_FN(onWindowResize));
+	}
+
+	bool SDLWindow::onWindowResize(event::WindowResizeEvent& event)
+	{
+		mWidth = event.getWidth();
+		mHeight = event.getHeight();
+
+		// TODO should be handled by renderer
+		glViewport(0, 0, mWidth, mHeight);
+		return false;
+	}
 }
