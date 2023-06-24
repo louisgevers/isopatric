@@ -52,5 +52,59 @@ namespace isopatric::ui
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}
 
-	void UILayer::onEvent(event::Event& event) {}
+	void UILayer::onEvent(event::Event& event)
+	{
+		event::EventDispatcher dispatch{ event };
+		dispatch.dispatch<event::KeyPressedEvent>(BIND_FN(onKeyPressed));
+		dispatch.dispatch<event::KeyReleasedEvent>(BIND_FN(onKeyReleased));
+		dispatch.dispatch<event::KeyInputEvent>(BIND_FN(onKeyInput));
+		dispatch.dispatch<event::MouseButtonPressedEvent>(BIND_FN(onMouseButtonPressed));
+		dispatch.dispatch<event::MouseButtonReleasedEvent>(BIND_FN(onMouseButtonReleased));
+		dispatch.dispatch<event::MouseMovedEvent>(BIND_FN(onMouseMoved));
+		dispatch.dispatch<event::MouseScrolledEvent>(BIND_FN(onMouseScrolled));
+	}
+
+	bool UILayer::onKeyPressed(event::KeyPressedEvent& event)
+	{
+		// TODO requires proper custom keycodes
+		return false;
+	}
+	bool UILayer::onKeyReleased(event::KeyReleasedEvent& event)
+	{
+		// TODO requires proper custom keycodes
+		return false;
+	}
+	bool UILayer::onKeyInput(event::KeyInputEvent& event)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.AddInputCharactersUTF8(event.getInput());
+		return false;
+	}
+	bool UILayer::onMouseButtonPressed(event::MouseButtonPressedEvent& event)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		// TODO: hacky - fix with own keymaps
+		io.MouseDown[event.getMouseButton() - 1] = true;
+		return false;
+	}
+	bool UILayer::onMouseButtonReleased(event::MouseButtonReleasedEvent& event)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		// TODO: hacky - fix with own keymaps
+		io.MouseDown[event.getMouseButton() - 1] = false;
+		return false;
+	}
+	bool UILayer::onMouseMoved(event::MouseMovedEvent& event)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.MousePos = ImVec2(event.getMouseX(), event.getMouseY());
+		return false;
+	}
+	bool UILayer::onMouseScrolled(event::MouseScrolledEvent& event)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseWheelH += event.getXOffset();
+		io.MouseWheel += event.getYOffset();
+		return false;
+	}
 }
