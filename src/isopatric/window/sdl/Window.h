@@ -17,7 +17,7 @@ namespace isopatric::window
 		~SDLWindow() override;
 
 		void onUpdate() override;
-		void onEvent(event::Event& event);
+		void onEvent(event::Event& event) override;
 
 	 private:
 		bool onWindowResize(event::WindowResizeEvent& event);
