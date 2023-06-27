@@ -16,7 +16,6 @@ namespace isopatric::ui
 		ImGui::StyleColorsDark();
 
 		ImGuiIO& io = ImGui::GetIO();
-		// TODO keymaps
 		io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
 		io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 
@@ -66,12 +65,14 @@ namespace isopatric::ui
 
 	bool UILayer::onKeyPressed(event::KeyPressedEvent& event)
 	{
-		// TODO requires proper custom keycodes
+		ImGuiIO& io = ImGui::GetIO();
+		io.AddKeyEvent(static_cast<ImGuiKey>(event.getKeyCode()), true);
 		return false;
 	}
 	bool UILayer::onKeyReleased(event::KeyReleasedEvent& event)
 	{
-		// TODO requires proper custom keycodes
+		ImGuiIO& io = ImGui::GetIO();
+		io.AddKeyEvent(static_cast<ImGuiKey>(event.getKeyCode()), false);
 		return false;
 	}
 	bool UILayer::onKeyInput(event::KeyInputEvent& event)
@@ -83,15 +84,13 @@ namespace isopatric::ui
 	bool UILayer::onMouseButtonPressed(event::MouseButtonPressedEvent& event)
 	{
 		ImGuiIO& io = ImGui::GetIO();
-		// TODO: hacky - fix with own keymaps
-		io.MouseDown[event.getMouseButton() - 1] = true;
+		io.MouseDown[event.getMouseButton()] = true;
 		return false;
 	}
 	bool UILayer::onMouseButtonReleased(event::MouseButtonReleasedEvent& event)
 	{
 		ImGuiIO& io = ImGui::GetIO();
-		// TODO: hacky - fix with own keymaps
-		io.MouseDown[event.getMouseButton() - 1] = false;
+		io.MouseDown[event.getMouseButton()] = false;
 		return false;
 	}
 	bool UILayer::onMouseMoved(event::MouseMovedEvent& event)

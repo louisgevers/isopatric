@@ -57,6 +57,8 @@ set(ISOPATRIC_LIB_SRC
         src/isopatric/event/MouseEvent.h
         src/isopatric/event/WindowEvent.h
         src/isopatric/input/Input.h
+        src/isopatric/input/KeyCode.h
+        src/isopatric/input/MouseCode.h
         src/isopatric/input/sdl/Input.cpp
         src/isopatric/input/sdl/Input.h
         src/isopatric/ui/UILayer.cpp

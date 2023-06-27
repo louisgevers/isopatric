@@ -1,6 +1,9 @@
 #ifndef ISOPATRIC_INPUT_H
 #define ISOPATRIC_INPUT_H
 
+#include "KeyCode.h"
+#include "MouseCode.h"
+
 namespace isopatric::input
 {
 
@@ -11,9 +14,9 @@ namespace isopatric::input
 
 		static Scope<Input> create();
 
-		virtual bool isKeyPressed(int keyCode) const = 0;
+		virtual bool isKeyPressed(KeyCode keyCode) const = 0;
 
-		virtual bool isMouseButtonPressed(int mouseButton) const = 0;
+		virtual bool isMouseButtonPressed(MouseCode mouseButton) const = 0;
 
 		virtual int getMouseX() const = 0;
 

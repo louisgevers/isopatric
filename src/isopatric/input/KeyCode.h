@@ -1,0 +1,118 @@
+#ifndef ISOPATRIC_SRC_ISOPATRIC_INPUT_KEYCODE_H
+#define ISOPATRIC_SRC_ISOPATRIC_INPUT_KEYCODE_H
+
+namespace isopatric::input
+{
+	enum KeyCode
+	{
+		// From imgui.h
+		None = 0,
+		Tab = 512,
+		LeftArrow,
+		RightArrow,
+		UpArrow,
+		DownArrow,
+		PageUp,
+		PageDown,
+		Home,
+		End,
+		Insert,
+		Delete,
+		Backspace,
+		Space,
+		Enter,
+		Escape,
+		LeftCtrl,
+		LeftShift,
+		LeftAlt,
+		LeftSuper,
+		RightCtrl,
+		RightShift,
+		RightAlt,
+		RightSuper,
+		Menu,
+		D0,
+		D1,
+		D2,
+		D3,
+		D4,
+		D5,
+		D6,
+		D7,
+		D8,
+		D9,
+		A,
+		B,
+		C,
+		D,
+		E,
+		F,
+		G,
+		H,
+		I,
+		J,
+		K,
+		L,
+		M,
+		N,
+		O,
+		P,
+		Q,
+		R,
+		S,
+		T,
+		U,
+		V,
+		W,
+		X,
+		Y,
+		Z,
+		F1,
+		F2,
+		F3,
+		F4,
+		F5,
+		F6,
+		F7,
+		F8,
+		F9,
+		F10,
+		F11,
+		F12,
+		Apostrophe,        // '
+		Comma,             // ,
+		Minus,             // -
+		Period,            // .
+		Slash,             // /
+		Semicolon,         // ;
+		Equal,             // =
+		LeftBracket,       // [
+		Backslash,         // \ (this text inhibit multiline comment caused by backslash)
+		RightBracket,      // ]
+		GraveAccent,       // `
+		CapsLock,
+		ScrollLock,
+		NumLock,
+		PrintScreen,
+		Pause,
+		Keypad0,
+		Keypad1,
+		Keypad2,
+		Keypad3,
+		Keypad4,
+		Keypad5,
+		Keypad6,
+		Keypad7,
+		Keypad8,
+		Keypad9,
+		KeypadDecimal,
+		KeypadDivide,
+		KeypadMultiply,
+		KeypadSubtract,
+		KeypadAdd,
+		KeypadEnter,
+		KeypadEqual,
+	};
+}
+
+#endif //ISOPATRIC_SRC_ISOPATRIC_INPUT_KEYCODE_H

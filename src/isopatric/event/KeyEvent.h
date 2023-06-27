@@ -3,6 +3,8 @@
 
 #include "Event.h"
 
+#include <isopatric/input/KeyCode.h>
+
 #include <utility>
 
 namespace isopatric::event
@@ -10,18 +12,18 @@ namespace isopatric::event
 	class KeyEvent : public Event
 	{
 	 public:
-		int getKeyCode() { return mKeyCode; }
+		input::KeyCode getKeyCode() { return mKeyCode; }
 
 		EVENT_CLASS_CATEGORIES(EventCategoryInput | EventCategoryKeyboard)
 	 protected:
-		KeyEvent(int keyCode) : mKeyCode(keyCode) {}
-		int mKeyCode;
+		KeyEvent(input::KeyCode keyCode) : mKeyCode(keyCode) {}
+		input::KeyCode mKeyCode;
 	};
 
 	class KeyPressedEvent : public KeyEvent
 	{
 	 public:
-		KeyPressedEvent(int keyCode, bool isRepeat)
+		KeyPressedEvent(input::KeyCode keyCode, bool isRepeat)
 			: KeyEvent(keyCode), mIsRepeat(isRepeat) {}
 
 		std::string toString() const override
@@ -39,7 +41,7 @@ namespace isopatric::event
 	class KeyReleasedEvent : public KeyEvent
 	{
 	 public:
-		KeyReleasedEvent(int keyCode)
+		KeyReleasedEvent(input::KeyCode keyCode)
 			: KeyEvent(keyCode) {}
 
 		std::string toString() const override

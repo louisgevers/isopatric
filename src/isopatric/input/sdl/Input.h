@@ -2,6 +2,8 @@
 #define ISOPATRIC_SDL_INPUT_H
 
 #include <isopatric/input/Input.h>
+#include <isopatric/input/KeyCode.h>
+#include <isopatric/input/MouseCode.h>
 
 namespace isopatric::input
 {
@@ -10,12 +12,17 @@ namespace isopatric::input
 	{
 	 public:
 		~SDLInput() override;
-		bool isKeyPressed(int keyCode) const override;
-		bool isMouseButtonPressed(int mouseButton) const override;
+		bool isKeyPressed(KeyCode keyCode) const override;
+		bool isMouseButtonPressed(MouseCode mouseButton) const override;
 		int getMouseX() const override;
 		int getMouseY() const override;
 		std::pair<int, int> getMousePosition() const override;
 	};
+
+	KeyCode keyCodeFromSDL(int keyCode);
+	int keyCodeToSDL(KeyCode keyCode);
+	MouseCode mouseCodeFromSDL(int mouseCode);
+	int mouseCodeToSDL(MouseCode mouseCode);
 }
 
 #endif //ISOPATRIC_SDL_INPUT_H

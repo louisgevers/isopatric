@@ -7,6 +7,8 @@
 #include <isopatric/event/MouseEvent.h>
 #include <isopatric/event/WindowEvent.h>
 
+#include <isopatric/input/sdl/Input.h>
+
 namespace isopatric::event
 {
 	Scope<EventQueue> EventQueue::create()
@@ -55,22 +57,34 @@ namespace isopatric::event
 			break;
 			// --- KEY EVENTS ---
 		case SDL_KEYDOWN:
-			return isopatric::createScope<KeyPressedEvent>(sdlEvent.key.keysym.sym, sdlEvent.key.repeat);
+		{
+			input::KeyCode keyCode = input::keyCodeFromSDL(sdlEvent.key.keysym.sym);
+			return isopatric::createScope<KeyPressedEvent>(keyCode, sdlEvent.key.repeat);
+		}
 		case SDL_KEYUP:
-			return isopatric::createScope<KeyReleasedEvent>(sdlEvent.key.keysym.sym);
+		{
+			input::KeyCode keyCode = input::keyCodeFromSDL(sdlEvent.key.keysym.sym);
+			return isopatric::createScope<KeyReleasedEvent>(keyCode);
+		}
 		case SDL_TEXTINPUT:
 			return isopatric::createScope<KeyInputEvent>(sdlEvent.text.text);
 			// --- MOUSE EVENTS ---
 		case SDL_MOUSEMOTION:
 			return isopatric::createScope<MouseMovedEvent>(sdlEvent.motion.x, sdlEvent.motion.y);
 		case SDL_MOUSEBUTTONDOWN:
-			return isopatric::createScope<MouseButtonPressedEvent>(sdlEvent.button.button,
+		{
+			input::MouseCode mouseCode = input::mouseCodeFromSDL(sdlEvent.button.button);
+			return isopatric::createScope<MouseButtonPressedEvent>(mouseCode,
 				sdlEvent.button.x,
 				sdlEvent.button.y);
+		}
 		case SDL_MOUSEBUTTONUP:
-			return isopatric::createScope<MouseButtonReleasedEvent>(sdlEvent.button.button,
+		{
+			input::MouseCode mouseCode = input::mouseCodeFromSDL(sdlEvent.button.button);
+			return isopatric::createScope<MouseButtonReleasedEvent>(mouseCode,
 				sdlEvent.button.x,
 				sdlEvent.button.y);
+		}
 		case SDL_MOUSEWHEEL:
 			return isopatric::createScope<MouseScrolledEvent>(sdlEvent.wheel.x, sdlEvent.wheel.y);
 		}
