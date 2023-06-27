@@ -3,6 +3,7 @@
 
 #include <isopatric/core/Base.h>
 #include <isopatric/event/Event.h>
+#include <isopatric/render/RenderContext.h>
 
 namespace isopatric::window
 {
@@ -26,9 +27,12 @@ namespace isopatric::window
 		inline unsigned int getWidth() const { return mWidth; }
 		inline unsigned int getHeight() const { return mHeight; }
 
+		render::RenderContext& getRenderContext() const { return *mRenderContext; }
+
 	 protected:
 		unsigned int mWidth;
 		unsigned int mHeight;
+		Scope<render::RenderContext> mRenderContext;
 	};
 }
 

@@ -61,6 +61,9 @@ set(ISOPATRIC_LIB_SRC
         src/isopatric/input/MouseCode.h
         src/isopatric/input/sdl/Input.cpp
         src/isopatric/input/sdl/Input.h
+        src/isopatric/render/RenderContext.h
+        src/isopatric/render/opengl/RenderContext.cpp
+        src/isopatric/render/opengl/RenderContext.h
         src/isopatric/ui/UILayer.cpp
         src/isopatric/ui/UILayer.h
         src/isopatric/window/Window.h

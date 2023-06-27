@@ -13,7 +13,7 @@ namespace isopatric::window
 	class SDLWindow : public Window
 	{
 	 public:
-		SDLWindow(WindowProps& props);
+		explicit SDLWindow(WindowProps& props);
 		~SDLWindow() override;
 
 		void onUpdate() override;
@@ -22,7 +22,6 @@ namespace isopatric::window
 	 private:
 		bool onWindowResize(event::WindowResizeEvent& event);
 		SDL_Window* mWindow;
-		SDL_GLContext mGLContext;
 	};
 }
 

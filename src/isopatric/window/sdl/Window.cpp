@@ -1,9 +1,7 @@
 #include "Window.h"
 
-#include "Window.h"
-
 #include <SDL2/SDL.h>
-#include <glad/glad.h>
+#include <glad/glad.h> // TODO remove this once we have a renderer
 
 namespace isopatric::window
 {
@@ -29,33 +27,23 @@ namespace isopatric::window
 			flags);
 		ASSERT(mWindow != nullptr, "Could not create SDL window: {}", SDL_GetError());
 
-		// Needed for higher versions of OpenGL on MacOS
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-		mGLContext = SDL_GL_CreateContext(mWindow);
-		ASSERT(mGLContext != nullptr, "Could not create SDL GL context: {}", SDL_GetError());
-		SDL_GL_MakeCurrent(mWindow, mGLContext);
+		// Create the rendering context
+		mRenderContext = render::RenderContext::create(mWindow);
 
-		// Enable vsync
-		SDL_GL_SetSwapInterval(1);
-		success = gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);
-		ASSERT(success, "Could not initialize GLAD: {}", glad_glGetError());
-		LOG_INFO("OpenGL initialized: version {}.{}", GLVersion.major, GLVersion.minor);
-
+		// TODO to be handled by the renderer
 		glViewport(0, 0, props.width, props.height);
 	}
 
 	SDLWindow::~SDLWindow()
 	{
-		SDL_GL_DeleteContext(mGLContext);
 		SDL_DestroyWindow(mWindow);
 		mWindow = nullptr;
-		mGLContext = nullptr;
 		SDL_QuitSubSystem(SDL_INIT_VIDEO);
 	}
 
 	void SDLWindow::onUpdate()
 	{
-		SDL_GL_SwapWindow(mWindow);
+		mRenderContext->swapBuffers();
 	}
 
 	void SDLWindow::onEvent(event::Event& event)
