@@ -20,6 +20,9 @@ namespace isopatric::core
 		window::WindowProps props{ "Isopatric", 640, 480 };
 		mWindow = window::Window::create(props);
 		mEventQueue = event::EventQueue::create();
+
+		mUILayer = new ui::UILayer();
+		mLayerStack.pushOverlay(mUILayer);
 	}
 
 	Application::~Application()
@@ -33,7 +36,7 @@ namespace isopatric::core
 		while (mRunning)
 		{
 			// TODO shouldn't be here
-			glClearColor(0, 1, 1, 1);
+			glClearColor(0.1f, 0.1f, 0.1f, 0.1f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			eventLoop();
@@ -41,6 +44,15 @@ namespace isopatric::core
 			{
 				layer->onUpdate();
 			}
+
+			// This should probably be DEBUG only
+			mUILayer->begin();
+			for (Layer* layer : mLayerStack)
+			{
+				layer->onUIRender();
+			}
+			mUILayer->end();
+
 			mWindow->onUpdate();
 		}
 	}
@@ -76,10 +88,12 @@ namespace isopatric::core
 		mRunning = false;
 		return true;
 	}
+
 	void Application::pushLayer(Layer* layer)
 	{
 		mLayerStack.pushLayer(layer);
 	}
+
 	void Application::pushOverlay(Layer* layer)
 	{
 		mLayerStack.pushOverlay(layer);

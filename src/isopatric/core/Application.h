@@ -6,35 +6,40 @@
 #include <isopatric/window/Window.h>
 #include <isopatric/event/EventQueue.h>
 #include <isopatric/event/WindowEvent.h>
+#include <isopatric/ui/UILayer.h>
 
-namespace isopatric::core
-{
-	class Application
-	{
-	 public:
-		Application();
-		~Application();
-		void run();
-		void eventLoop();
+namespace isopatric::core {
+    class Application {
+    public:
+        Application();
 
-		bool onWindowClose(event::WindowCloseEvent& event);
+        ~Application();
 
-		void pushLayer(Layer* layer);
-		void pushOverlay(Layer* layer);
+        void run();
 
-		inline window::Window& getWindow() { return *mWindow; }
+        void eventLoop();
 
-		inline static Application& get() { return *sInstance; }
-	 private:
-		bool mRunning;
-		core::LayerStack mLayerStack;
-		Scope<window::Window> mWindow;
-		Scope<event::EventQueue> mEventQueue;
+        bool onWindowClose(event::WindowCloseEvent &event);
 
-		static Application* sInstance;
-	};
+        void pushLayer(Layer *layer);
 
-	// Client hook
-	Application* createApplication();
+        void pushOverlay(Layer *layer);
+
+        inline window::Window &getWindow() { return *mWindow; }
+
+        inline static Application &get() { return *sInstance; }
+
+    private:
+        bool mRunning;
+        core::LayerStack mLayerStack;
+        ui::UILayer *mUILayer;
+        Scope <window::Window> mWindow;
+        Scope <event::EventQueue> mEventQueue;
+
+        static Application *sInstance;
+    };
+
+    // Client hook
+    Application *createApplication();
 }
 #endif // ISOPATRIC_CORE_APPLICATION_H
