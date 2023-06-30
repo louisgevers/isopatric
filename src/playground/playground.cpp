@@ -59,23 +59,16 @@ public:
         glGenVertexArrays(1, &VAO);
         glBindVertexArray(VAO);
 
-        // Create vertex buffer object
-        unsigned int VBO;
-        glGenBuffers(1, &VBO);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        // Copy vertex data in buffer memory
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); // set once used many
-
-        // Create element buffer object
-        unsigned int EBO;
-        glGenBuffers(1, &EBO);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+        // Create buffers
+        mVertexBuffer = isopatric::render::VertexBuffer::create(vertices, sizeof(vertices));
+        mIndexBuffer = isopatric::render::IndexBuffer::create(indices, sizeof(indices));
 
         // Linking vertex attributes
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) 0);
         glEnableVertexAttribArray(0);
 
+        // Done with configuring the VBO, can safely unbind vertex buffer, NOT index buffer
+        mVertexBuffer->unbind();
     }
 
     void onUpdate() override {
@@ -87,13 +80,15 @@ public:
         glUseProgram(mShaderProgram);
         glBindVertexArray(VAO);
 //        glDrawArrays(GL_TRIANGLES, 0, 6);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, mIndexBuffer->getCount(), GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
     }
 
 private:
     unsigned int mShaderProgram{};
     unsigned int VAO{};
+    std::unique_ptr<isopatric::render::VertexBuffer> mVertexBuffer;
+    std::unique_ptr<isopatric::render::IndexBuffer> mIndexBuffer;
 };
 
 class TestLayer : public isopatric::core::Layer {
