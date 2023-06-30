@@ -35,10 +35,6 @@ namespace isopatric::core
 	{
 		while (mRunning)
 		{
-			// TODO shouldn't be here
-			glClearColor(0.1f, 0.1f, 0.1f, 0.1f);
-			glClear(GL_COLOR_BUFFER_BIT);
-
 			eventLoop();
 			for (Layer* layer : mLayerStack)
 			{
