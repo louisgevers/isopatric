@@ -63,11 +63,14 @@ set(ISOPATRIC_LIB_SRC
         src/isopatric/input/sdl/Input.h
         src/isopatric/render/IndexBuffer.h
         src/isopatric/render/RenderContext.h
+        src/isopatric/render/VertexArray.h
         src/isopatric/render/VertexBuffer.h
         src/isopatric/render/opengl/IndexBuffer.cpp
         src/isopatric/render/opengl/IndexBuffer.h
         src/isopatric/render/opengl/RenderContext.cpp
         src/isopatric/render/opengl/RenderContext.h
+        src/isopatric/render/opengl/VertexArray.cpp
+        src/isopatric/render/opengl/VertexArray.h
         src/isopatric/render/opengl/VertexBuffer.cpp
         src/isopatric/render/opengl/VertexBuffer.h
         src/isopatric/ui/UILayer.cpp

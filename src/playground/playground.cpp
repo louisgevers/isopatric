@@ -11,15 +11,19 @@ public:
     void onAttach() override {
         const char *vertexShaderSource = "#version 330 core\n"
                                          "layout (location = 0) in vec3 aPos;\n"
+                                         "layout (location = 1) in vec3 aColor;\n"
+                                         "out vec3 myColor;\n"
                                          "void main()\n"
                                          "{\n"
                                          "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+                                         "   myColor = aColor;\n"
                                          "}\0";
         const char *fragmentShaderSource = "#version 330 core\n"
+                                           "in vec3 myColor;\n"
                                            "out vec4 FragColor;\n"
                                            "void main()\n"
                                            "{\n"
-                                           "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+                                           "   FragColor = vec4(myColor, 1.0f);\n"
                                            "}\n\0";
         // Vertex shader
         unsigned int vertexShader;
@@ -44,10 +48,10 @@ public:
 
         // 2 triangle vertices for a rectangle
         float vertices[] = {
-                0.5f, 0.5f, 0.0f,
-                0.5f, -0.5f, 0.0f,
-                -0.5f, -0.5f, 0.0f,
-                -0.5f, 0.5f, 0.0f
+                0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
+                0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
+                -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
+                -0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f,
         };
         // Shared indices
         unsigned int indices[] = {
@@ -56,19 +60,20 @@ public:
         };
 
         // Create vertex array object
-        glGenVertexArrays(1, &VAO);
-        glBindVertexArray(VAO);
+        mVertexArray = isopatric::render::VertexArray::create();
 
-        // Create buffers
+        // Create vertex buffer
         mVertexBuffer = isopatric::render::VertexBuffer::create(vertices, sizeof(vertices));
+        isopatric::render::VertexBufferLayout bufferLayout = {
+                {isopatric::render::ShaderDataType::Float3},
+                {isopatric::render::ShaderDataType::Float3}
+        };
+        mVertexBuffer->setLayout(bufferLayout);
+        mVertexArray->addVertexBuffer(mVertexBuffer);
+
+        // Create index buffer
         mIndexBuffer = isopatric::render::IndexBuffer::create(indices, sizeof(indices));
-
-        // Linking vertex attributes
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) 0);
-        glEnableVertexAttribArray(0);
-
-        // Done with configuring the VBO, can safely unbind vertex buffer, NOT index buffer
-        mVertexBuffer->unbind();
+        mVertexArray->setIndexBuffer(mIndexBuffer);
     }
 
     void onUpdate() override {
@@ -78,17 +83,17 @@ public:
 
         // Draw with shader program
         glUseProgram(mShaderProgram);
-        glBindVertexArray(VAO);
+        mVertexArray->bind();
 //        glDrawArrays(GL_TRIANGLES, 0, 6);
         glDrawElements(GL_TRIANGLES, mIndexBuffer->getCount(), GL_UNSIGNED_INT, 0);
-        glBindVertexArray(0);
+        mVertexArray->unbind();
     }
 
 private:
     unsigned int mShaderProgram{};
-    unsigned int VAO{};
-    std::unique_ptr<isopatric::render::VertexBuffer> mVertexBuffer;
-    std::unique_ptr<isopatric::render::IndexBuffer> mIndexBuffer;
+    std::unique_ptr<isopatric::render::VertexArray> mVertexArray;
+    std::shared_ptr<isopatric::render::VertexBuffer> mVertexBuffer;
+    std::shared_ptr<isopatric::render::IndexBuffer> mIndexBuffer;
 };
 
 class TestLayer : public isopatric::core::Layer {

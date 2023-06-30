@@ -14,8 +14,13 @@ namespace isopatric::render {
 
         void unbind() override;
 
+        void setLayout(VertexBufferLayout bufferLayout) override { mBufferLayout = bufferLayout; };
+
+        VertexBufferLayout &getLayout() override { return mBufferLayout; };
+
     private:
         unsigned int mBufferId;
+        VertexBufferLayout mBufferLayout;
     };
 }
 
