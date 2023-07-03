@@ -25,26 +25,7 @@ public:
                                            "{\n"
                                            "   FragColor = vec4(myColor, 1.0f);\n"
                                            "}\n\0";
-        // Vertex shader
-        unsigned int vertexShader;
-        vertexShader = glCreateShader(GL_VERTEX_SHADER);
-        glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
-        glCompileShader(vertexShader);
 
-        // Fragment shader
-        unsigned int fragmentShader;
-        fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-        glShaderSource(fragmentShader, 1, &fragmentShaderSource, nullptr);
-        glCompileShader(fragmentShader);
-
-        // Link into shader program
-        mShaderProgram = glCreateProgram();
-        glAttachShader(mShaderProgram, vertexShader);
-        glAttachShader(mShaderProgram, fragmentShader);
-        glLinkProgram(mShaderProgram);
-        // Don't need these anymore
-        glDeleteShader(vertexShader);
-        glDeleteShader(fragmentShader);
 
         // 2 triangle vertices for a rectangle
         float vertices[] = {
@@ -58,6 +39,9 @@ public:
                 0, 1, 3,
                 1, 2, 3
         };
+
+        // Compile the shaders
+        mShader = isopatric::render::Shader::create(vertexShaderSource, fragmentShaderSource);
 
         // Create vertex array object
         mVertexArray = isopatric::render::VertexArray::create();
@@ -82,15 +66,16 @@ public:
         glClear(GL_COLOR_BUFFER_BIT);
 
         // Draw with shader program
-        glUseProgram(mShaderProgram);
+        mShader->bind();
         mVertexArray->bind();
 //        glDrawArrays(GL_TRIANGLES, 0, 6);
         glDrawElements(GL_TRIANGLES, mIndexBuffer->getCount(), GL_UNSIGNED_INT, 0);
         mVertexArray->unbind();
+        mShader->bind();
     }
 
 private:
-    unsigned int mShaderProgram{};
+    std::unique_ptr<isopatric::render::Shader> mShader;
     std::unique_ptr<isopatric::render::VertexArray> mVertexArray;
     std::shared_ptr<isopatric::render::VertexBuffer> mVertexBuffer;
     std::shared_ptr<isopatric::render::IndexBuffer> mIndexBuffer;
