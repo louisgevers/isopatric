@@ -14,6 +14,9 @@ namespace isopatric::render {
         void bind() override;
         void unbind() override;
 
+        void setBool(const std::string &name, bool value) const override;
+        void setInt(const std::string &name, int value) const override;
+        void setFloat(const std::string &name, float value) const override;
     private:
         unsigned int mShaderProgramId;
         void compileProgram(const std::string &vertexSrc, const std::string &fragmentSrc);

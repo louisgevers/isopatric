@@ -107,4 +107,16 @@ namespace isopatric::render {
         glDeleteShader(vertexShader);
         glDeleteShader(fragmentShader);
     }
+
+    void GLShader::setBool(const std::string &name, bool value) const {
+        glUniform1i(glGetUniformLocation(mShaderProgramId, name.c_str()), (int) value);
+    }
+
+    void GLShader::setInt(const std::string &name, int value) const {
+        glUniform1i(glGetUniformLocation(mShaderProgramId, name.c_str()), value);
+    }
+
+    void GLShader::setFloat(const std::string &name, float value) const {
+        glUniform1f(glGetUniformLocation(mShaderProgramId, name.c_str()), value);
+    }
 }
