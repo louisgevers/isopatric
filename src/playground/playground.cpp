@@ -5,24 +5,6 @@
 class OpenGLExperimentLayer : public isopatric::core::Layer {
 public:
     void onAttach() override {
-        const char *vertexShaderSource = "#version 330 core\n"
-                                         "layout (location = 0) in vec3 aPos;\n"
-                                         "layout (location = 1) in vec3 aColor;\n"
-                                         "out vec3 myColor;\n"
-                                         "void main()\n"
-                                         "{\n"
-                                         "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-                                         "   myColor = aColor;\n"
-                                         "}\0";
-        const char *fragmentShaderSource = "#version 330 core\n"
-                                           "in vec3 myColor;\n"
-                                           "out vec4 FragColor;\n"
-                                           "void main()\n"
-                                           "{\n"
-                                           "   FragColor = vec4(myColor, 1.0f);\n"
-                                           "}\n\0";
-
-
         // 2 triangle vertices for a rectangle
         float vertices[] = {
                 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
@@ -37,7 +19,7 @@ public:
         };
 
         // Compile the shaders
-        mShader = isopatric::render::Shader::create(vertexShaderSource, fragmentShaderSource);
+        mShader = isopatric::render::Shader::create("assets/shaders/Base.glsl");
 
         // Create vertex array object
         mVertexArray = isopatric::render::VertexArray::create();

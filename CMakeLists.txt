@@ -95,6 +95,9 @@ set(ISOPATRIC_LIB_SRC
 set(ISOPATRIC_PLAYGROUND_SRC
         src/playground/playground.cpp)
 
+# Copy playground assets
+file(COPY src/playground/assets DESTINATION ${CMAKE_BINARY_DIR})
+
 # External includes for the library source files
 set(ISOPATRIC_EXTERNAL_INCLUDES
         external/spdlog/include

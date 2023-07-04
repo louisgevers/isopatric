@@ -11,6 +11,7 @@ namespace isopatric::render {
 
         virtual void unbind() = 0;
 
+        static Scope <Shader> create(const std::string &filePath);
         static Scope <Shader> create(const std::string &vertexSrc, const std::string &fragmentSrc);
     };
 }

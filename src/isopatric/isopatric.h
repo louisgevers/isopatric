@@ -4,6 +4,8 @@
 #include <isopatric/core/Application.h>
 #include <isopatric/core/Log.h>
 
+#include <isopatric/file/AssetReader.h>
+
 #include <isopatric/render/IndexBuffer.h>
 #include <isopatric/render/RenderCommand.h>
 #include <isopatric/render/RenderContext.h>

@@ -1,5 +1,7 @@
 #include "Shader.h"
 
+#include <isopatric/file/AssetReader.h>
+
 #include <glad/glad.h>
 
 namespace isopatric::render {
@@ -21,11 +23,50 @@ namespace isopatric::render {
         }
     }
 
+    Scope <Shader> Shader::create(const std::string &filePath) {
+        return createScope<GLShader>(filePath);
+    }
+
     Scope <Shader> Shader::create(const std::string &vertexSrc, const std::string &fragmentSrc) {
         return createScope<GLShader>(vertexSrc, fragmentSrc);
     }
 
+    GLShader::GLShader(const std::string &filePath) {
+        // Single source contains both vertex and fragment source
+        std::string vertexSrc = file::AssetReader::readBinary(filePath);
+
+        // Create a copy for the fragment source
+        std::string fragmentSrc = vertexSrc;
+
+        // Append after first line containing version
+        size_t eol = vertexSrc.find_first_of("\r\n");
+        ASSERT(eol != std::string::npos, "Shader syntax error, no new line.")
+
+        // Add definition to separate vertex and fragment sources
+        vertexSrc.insert(eol + 1, "#define VERTEX_SHADER\n");
+        fragmentSrc.insert(eol + 1, "#define FRAGMENT_SHADER\n");
+
+        // Compile sources
+        compileProgram(vertexSrc, fragmentSrc);
+    }
+
     GLShader::GLShader(const std::string &vertexSrc, const std::string &fragmentSrc) {
+        compileProgram(vertexSrc, fragmentSrc);
+    }
+
+    GLShader::~GLShader() {
+        glDeleteProgram(mShaderProgramId);
+    }
+
+    void GLShader::bind() {
+        glUseProgram(mShaderProgramId);
+    }
+
+    void GLShader::unbind() {
+        glUseProgram(0);
+    }
+
+    void GLShader::compileProgram(const std::string &vertexSrc, const std::string &fragmentSrc) {
         unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
         const GLchar *source = vertexSrc.c_str();
         glShaderSource(vertexShader, 1, &source, nullptr);
@@ -65,17 +106,5 @@ namespace isopatric::render {
         // Don't need these anymore
         glDeleteShader(vertexShader);
         glDeleteShader(fragmentShader);
-    }
-
-    GLShader::~GLShader() {
-        glDeleteProgram(mShaderProgramId);
-    }
-
-    void GLShader::bind() {
-        glUseProgram(mShaderProgramId);
-    }
-
-    void GLShader::unbind() {
-        glUseProgram(0);
     }
 }
