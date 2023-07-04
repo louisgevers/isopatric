@@ -74,4 +74,8 @@ namespace isopatric::render {
         buffer->bind();
         mIndexBuffer = buffer;
     }
+
+    Ref <IndexBuffer> &GLVertexArray::getIndexBuffer() {
+        return mIndexBuffer;
+    }
 }

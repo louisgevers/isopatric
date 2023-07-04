@@ -17,11 +17,12 @@ namespace isopatric::render {
         void addVertexBuffer(Ref <VertexBuffer> &buffer) override;
 
         void setIndexBuffer(Ref <IndexBuffer> &buffer) override;
+        Ref <IndexBuffer> &getIndexBuffer() override;
 
     private:
         unsigned int mVertexArrayId;
-        std::vector<Ref<VertexBuffer>> mVertexBuffers;
-        Ref<IndexBuffer> mIndexBuffer;
+        std::vector <Ref<VertexBuffer>> mVertexBuffers;
+        Ref <IndexBuffer> mIndexBuffer;
     };
 }
 

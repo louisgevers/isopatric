@@ -3,9 +3,6 @@
 #include <isopatric/window/Window.h>
 #include <isopatric/event/Event.h>
 
-// TODO temporary
-#include <glad/glad.h>
-
 namespace isopatric::core {
     Application *Application::sInstance = nullptr;
 

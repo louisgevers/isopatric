@@ -5,7 +5,10 @@
 #include <isopatric/core/Log.h>
 
 #include <isopatric/render/IndexBuffer.h>
+#include <isopatric/render/RenderCommand.h>
 #include <isopatric/render/RenderContext.h>
+#include <isopatric/render/Renderer.h>
+#include <isopatric/render/RendererAPI.h>
 #include <isopatric/render/Shader.h>
 #include <isopatric/render/VertexArray.h>
 #include <isopatric/render/VertexBuffer.h>

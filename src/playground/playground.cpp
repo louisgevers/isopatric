@@ -2,10 +2,6 @@
 
 #include <imgui.h>
 
-// TODO: temporary for experimenting with OpenGL
-#include <glad/glad.h>
-
-
 class OpenGLExperimentLayer : public isopatric::core::Layer {
 public:
     void onAttach() override {
@@ -47,38 +43,46 @@ public:
         mVertexArray = isopatric::render::VertexArray::create();
 
         // Create vertex buffer
-        mVertexBuffer = isopatric::render::VertexBuffer::create(vertices, sizeof(vertices));
+        std::shared_ptr<isopatric::render::VertexBuffer> vertexBuffer;
+        vertexBuffer = isopatric::render::VertexBuffer::create(vertices, sizeof(vertices));
         isopatric::render::VertexBufferLayout bufferLayout = {
                 {isopatric::render::ShaderDataType::Float3},
                 {isopatric::render::ShaderDataType::Float3}
         };
-        mVertexBuffer->setLayout(bufferLayout);
-        mVertexArray->addVertexBuffer(mVertexBuffer);
+        vertexBuffer->setLayout(bufferLayout);
+        mVertexArray->addVertexBuffer(vertexBuffer);
 
         // Create index buffer
-        mIndexBuffer = isopatric::render::IndexBuffer::create(indices, sizeof(indices));
-        mVertexArray->setIndexBuffer(mIndexBuffer);
+        std::shared_ptr<isopatric::render::IndexBuffer> indexBuffer;
+        indexBuffer = isopatric::render::IndexBuffer::create(indices, sizeof(indices));
+        mVertexArray->setIndexBuffer(indexBuffer);
     }
 
     void onUpdate() override {
         // Dark background
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        isopatric::render::RenderCommand::setClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        isopatric::render::RenderCommand::clear();
 
         // Draw with shader program
-        mShader->bind();
-        mVertexArray->bind();
-//        glDrawArrays(GL_TRIANGLES, 0, 6);
-        glDrawElements(GL_TRIANGLES, mIndexBuffer->getCount(), GL_UNSIGNED_INT, 0);
-        mVertexArray->unbind();
-        mShader->bind();
+        renderer.beginScene();
+        renderer.submit(mShader, mVertexArray);
+        renderer.endScene();
+    }
+
+    void onEvent(isopatric::event::Event &event) override {
+        isopatric::event::EventDispatcher dispatcher{event};
+        dispatcher.dispatch<isopatric::event::WindowResizeEvent>(BIND_FN(onWindowResize));
+    }
+
+    bool onWindowResize(isopatric::event::WindowResizeEvent &event) {
+        renderer.onWindowResize(event.getWidth(), event.getHeight());
+        return false;
     }
 
 private:
-    std::unique_ptr<isopatric::render::Shader> mShader;
-    std::unique_ptr<isopatric::render::VertexArray> mVertexArray;
-    std::shared_ptr<isopatric::render::VertexBuffer> mVertexBuffer;
-    std::shared_ptr<isopatric::render::IndexBuffer> mIndexBuffer;
+    isopatric::render::Renderer renderer{};
+    std::shared_ptr<isopatric::render::Shader> mShader;
+    std::shared_ptr<isopatric::render::VertexArray> mVertexArray;
 };
 
 class TestLayer : public isopatric::core::Layer {

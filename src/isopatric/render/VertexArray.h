@@ -14,11 +14,12 @@ namespace isopatric::render {
 
         virtual void unbind() = 0;
 
-        virtual void addVertexBuffer(Ref <VertexBuffer> &buffer) = 0;
+        virtual void addVertexBuffer(Ref<VertexBuffer> &buffer) = 0;
 
-        virtual void setIndexBuffer(Ref <IndexBuffer> &buffer) = 0;
+        virtual void setIndexBuffer(Ref<IndexBuffer> &buffer) = 0;
+        virtual Ref<IndexBuffer> &getIndexBuffer() = 0;
 
-        static Scope <VertexArray> create();
+        static Scope<VertexArray> create();
     };
 }
 #endif //ISOPATRIC_ISOPATRIC_RENDER_VERTEXARRAY_H
