@@ -56,6 +56,8 @@ set(ISOPATRIC_LIB_SRC
         src/isopatric/event/KeyEvent.h
         src/isopatric/event/MouseEvent.h
         src/isopatric/event/WindowEvent.h
+        src/isopatric/file/AssetReader.cpp
+        src/isopatric/file/AssetReader.h
         src/isopatric/input/Input.h
         src/isopatric/input/KeyCode.h
         src/isopatric/input/MouseCode.h
