@@ -4,12 +4,15 @@
 
 layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec3 aColor;
+layout (location = 2) in vec2 aTexCoord;
 
 out vec3 myColor;
+out vec2 texCoord;
 
 void main() {
     gl_Position = vec4(aPos, 1.0);
     myColor = aColor;
+    texCoord = aTexCoord;
 }
 
 #endif
@@ -17,11 +20,15 @@ void main() {
 #ifdef FRAGMENT_SHADER
 
 in vec3 myColor;
+in vec2 texCoord;
 
 out vec4 FragColor;
 
+uniform sampler2D myTexture1;
+uniform sampler2D myTexture2;
+
 void main() {
-    FragColor = vec4(myColor, 1.0);
+    FragColor = mix(texture(myTexture1, texCoord), texture(myTexture2, texCoord), 0.2) * vec4(myColor, 1.0);
 }
 
 #endif

@@ -36,6 +36,8 @@ set(EXTERNAL_IMGUI_SRC
 add_library(imgui ${EXTERNAL_IMGUI_SRC})
 target_link_libraries(imgui PRIVATE ${SDL2_LIBRARIES})
 target_include_directories(imgui PRIVATE external/imgui ${SDL2_INCLUDE_DIR})
+# --- STB_IMAGE ---
+add_library(stb_image external/stb_image/stb_image.cpp)
 
 # IsoPatric library source files
 set(ISOPATRIC_LIB_SRC
@@ -103,10 +105,11 @@ set(ISOPATRIC_EXTERNAL_INCLUDES
         external/spdlog/include
         external/glad/include
         external/imgui
+        external/stb_image
         ${SDL2_INCLUDE_DIRS})
 
 # External libraries
-set(ISOPATRIC_EXTERNAL_LIBRARIES ${SDL2_LIBRARIES} glad imgui)
+set(ISOPATRIC_EXTERNAL_LIBRARIES ${SDL2_LIBRARIES} glad imgui stb_image)
 
 # Include header files for all project
 include_directories(src)
