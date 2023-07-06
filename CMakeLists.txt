@@ -40,7 +40,7 @@ target_include_directories(imgui PRIVATE external/imgui ${SDL2_INCLUDE_DIR})
 add_library(stb_image external/stb_image/stb_image.cpp)
 
 # IsoPatric library source files
-set(ISOPATRIC_LIB_SRC
+set(ISOPATRIC_LIB_SRC_CORE
         src/isopatric/isopatric.h
         src/isopatric/core/Application.cpp
         src/isopatric/core/Application.h
@@ -51,6 +51,9 @@ set(ISOPATRIC_LIB_SRC
         src/isopatric/core/LayerStack.h
         src/isopatric/core/Log.cpp
         src/isopatric/core/Log.h
+        )
+
+set(ISOPATRIC_LIB_SRC_EVENT
         src/isopatric/event/Event.h
         src/isopatric/event/EventQueue.h
         src/isopatric/event/sdl/EventQueue.cpp
@@ -58,13 +61,22 @@ set(ISOPATRIC_LIB_SRC
         src/isopatric/event/KeyEvent.h
         src/isopatric/event/MouseEvent.h
         src/isopatric/event/WindowEvent.h
+        )
+
+set(ISOPATRIC_LIB_SRC_FILE
         src/isopatric/file/AssetReader.cpp
         src/isopatric/file/AssetReader.h
+        )
+
+set(ISOPATRIC_LIB_SRC_INPUT
         src/isopatric/input/Input.h
         src/isopatric/input/KeyCode.h
         src/isopatric/input/MouseCode.h
         src/isopatric/input/sdl/Input.cpp
         src/isopatric/input/sdl/Input.h
+        )
+
+set(ISOPATRIC_LIB_SRC_RENDER
         src/isopatric/render/IndexBuffer.h
         src/isopatric/render/RenderCommand.h
         src/isopatric/render/RenderContext.h
@@ -89,11 +101,27 @@ set(ISOPATRIC_LIB_SRC
         src/isopatric/render/opengl/VertexArray.h
         src/isopatric/render/opengl/VertexBuffer.cpp
         src/isopatric/render/opengl/VertexBuffer.h
+        )
+
+set(ISOPATRIC_LIB_SRC_UI
         src/isopatric/ui/UILayer.cpp
         src/isopatric/ui/UILayer.h
+        )
+
+set(ISOPATRIC_LIB_SRC_WINDOW
         src/isopatric/window/Window.h
         src/isopatric/window/sdl/Window.cpp
         src/isopatric/window/sdl/Window.h
+        )
+
+set(ISOPATRIC_LIB_SRC
+        ${ISOPATRIC_LIB_SRC_CORE}
+        ${ISOPATRIC_LIB_SRC_EVENT}
+        ${ISOPATRIC_LIB_SRC_FILE}
+        ${ISOPATRIC_LIB_SRC_INPUT}
+        ${ISOPATRIC_LIB_SRC_RENDER}
+        ${ISOPATRIC_LIB_SRC_UI}
+        ${ISOPATRIC_LIB_SRC_WINDOW}
         )
 
 # Isopatric playground files
@@ -109,6 +137,7 @@ set(ISOPATRIC_EXTERNAL_INCLUDES
         external/glad/include
         external/imgui
         external/stb_image
+        external/glm
         ${SDL2_INCLUDE_DIRS})
 
 # External libraries
