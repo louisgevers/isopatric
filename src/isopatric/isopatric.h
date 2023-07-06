@@ -6,6 +6,9 @@
 
 #include <isopatric/file/AssetReader.h>
 
+#include <isopatric/math/Matrix.h>
+#include <isopatric/math/Vector.h>
+
 #include <isopatric/render/IndexBuffer.h>
 #include <isopatric/render/RenderCommand.h>
 #include <isopatric/render/RenderContext.h>

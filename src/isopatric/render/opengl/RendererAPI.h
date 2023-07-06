@@ -10,6 +10,8 @@ namespace isopatric::render {
         GLRendererAPI();
         ~GLRendererAPI() override;
 
+        void init() override;
+
         void clear() override;
         void setClearColor(float red, float green, float blue, float alpha) override;
 

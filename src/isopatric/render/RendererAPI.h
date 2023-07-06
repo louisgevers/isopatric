@@ -8,6 +8,7 @@ namespace isopatric::render {
     public:
         virtual ~RendererAPI() = default;
 
+        virtual void init() = 0;
         virtual void clear() = 0;
         virtual void setClearColor(float red, float green, float blue, float alpha) = 0;
 

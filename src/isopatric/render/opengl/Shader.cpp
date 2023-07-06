@@ -119,4 +119,9 @@ namespace isopatric::render {
     void GLShader::setFloat(const std::string &name, float value) const {
         glUniform1f(glGetUniformLocation(mShaderProgramId, name.c_str()), value);
     }
+
+    void GLShader::setMatrix4(const std::string &name, math::Matrix4 &value) const {
+        int location = glGetUniformLocation(mShaderProgramId, name.c_str());
+        glUniformMatrix4fv(location, 1, GL_FALSE, value.getElements());
+    }
 }

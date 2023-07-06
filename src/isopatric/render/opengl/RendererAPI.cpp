@@ -11,8 +11,12 @@ namespace isopatric::render {
     GLRendererAPI::GLRendererAPI() = default;
     GLRendererAPI::~GLRendererAPI() = default;
 
+    void GLRendererAPI::init() {
+        glEnable(GL_DEPTH_TEST);
+    }
+
     void GLRendererAPI::clear() {
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
     void GLRendererAPI::setClearColor(float red, float green, float blue, float alpha) {

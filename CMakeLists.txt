@@ -76,6 +76,13 @@ set(ISOPATRIC_LIB_SRC_INPUT
         src/isopatric/input/sdl/Input.h
         )
 
+set(ISOPATRIC_LIB_SRC_MATH
+        src/isopatric/math/Matrix.cpp
+        src/isopatric/math/Matrix.h
+        src/isopatric/math/Vector.cpp
+        src/isopatric/math/Vector.h
+        )
+
 set(ISOPATRIC_LIB_SRC_RENDER
         src/isopatric/render/IndexBuffer.h
         src/isopatric/render/RenderCommand.h
@@ -119,6 +126,7 @@ set(ISOPATRIC_LIB_SRC
         ${ISOPATRIC_LIB_SRC_EVENT}
         ${ISOPATRIC_LIB_SRC_FILE}
         ${ISOPATRIC_LIB_SRC_INPUT}
+        ${ISOPATRIC_LIB_SRC_MATH}
         ${ISOPATRIC_LIB_SRC_RENDER}
         ${ISOPATRIC_LIB_SRC_UI}
         ${ISOPATRIC_LIB_SRC_WINDOW}

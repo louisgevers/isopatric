@@ -6,6 +6,10 @@
 namespace isopatric::render {
     class RenderCommand {
     public:
+        static inline void init() {
+            sRendererAPI->init();
+        }
+
         static inline void clear() {
             sRendererAPI->clear();
         }
