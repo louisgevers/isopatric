@@ -12,6 +12,7 @@
 #include <isopatric/render/Renderer.h>
 #include <isopatric/render/RendererAPI.h>
 #include <isopatric/render/Shader.h>
+#include <isopatric/render/Texture.h>
 #include <isopatric/render/VertexArray.h>
 #include <isopatric/render/VertexBuffer.h>
 

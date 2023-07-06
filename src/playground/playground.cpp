@@ -2,10 +2,6 @@
 
 #include <imgui.h>
 
-// TODO: remove when textures are implemented
-#include <stb_image.h>
-#include <glad/glad.h>
-
 class OpenGLExperimentLayer : public isopatric::core::Layer {
 public:
     void onAttach() override {
@@ -45,63 +41,15 @@ public:
         indexBuffer = isopatric::render::IndexBuffer::create(indices, sizeof(indices));
         mVertexArray->setIndexBuffer(indexBuffer);
 
-        // --- BEGIN TEXTURES ---
-
-        // --- Texture 1 ---
-        // Flip y-axis as opengl 0.0 is bottom
-        stbi_set_flip_vertically_on_load(true);
-        // Load texture image
-        int width, height, nChannels;
-        unsigned char *data = stbi_load("assets/textures/container.jpg", &width, &height, &nChannels, 0);
-        if (!data) {
-            LOG_ERROR("Failed to load texture.");
-        }
-
-        // Generate texture
-        glGenTextures(1, &mTexture1);
-        glBindTexture(GL_TEXTURE_2D, mTexture1);
-        // Attach image and create the mipmaps
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-
-        // Wrapping/filtering options
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-        // No longer needed
-        stbi_image_free(data);
-
-        // --- Texture 2 ---
-        // Load texture image
-        data = stbi_load("assets/textures/awesomeface.png", &width, &height, &nChannels, 0);
-        if (!data) {
-            LOG_ERROR("Failed to load texture.");
-        }
-
-        // Generate texture
-        glGenTextures(1, &mTexture2);
-        glBindTexture(GL_TEXTURE_2D, mTexture2);
-        // Attach image (RGBA!) and create the mipmaps
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-
-        // Wrapping/filtering options
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-        // No longer needed
-        stbi_image_free(data);
+        // Create textures
+        mTexture1 = isopatric::render::Texture::create("assets/textures/container.jpg",
+                                                       {isopatric::render::ImageFormat::RGB});
+        mTexture2 = isopatric::render::Texture::create("assets/textures/awesomeface.png");
 
         // Texture units to shader
         mShader->bind();
         mShader->setInt("myTexture1", 0);
         mShader->setInt("myTexture2", 1);
-
-        // --- END TEXTURES ---
     }
 
     void onUpdate() override {
@@ -110,10 +58,8 @@ public:
         isopatric::render::RenderCommand::clear();
 
         // Bind textures on corresponding texture units
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, mTexture1);
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, mTexture2);
+        mTexture1->bind(0);
+        mTexture2->bind(1);
 
         // Draw with shader program
         renderer.beginScene();
@@ -135,8 +81,8 @@ private:
     isopatric::render::Renderer renderer{};
     std::shared_ptr<isopatric::render::Shader> mShader;
     std::shared_ptr<isopatric::render::VertexArray> mVertexArray;
-    unsigned int mTexture1;
-    unsigned int mTexture2;
+    std::unique_ptr<isopatric::render::Texture> mTexture1;
+    std::unique_ptr<isopatric::render::Texture> mTexture2;
 };
 
 class TestLayer : public isopatric::core::Layer {

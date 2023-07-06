@@ -72,6 +72,7 @@ set(ISOPATRIC_LIB_SRC
         src/isopatric/render/Renderer.h
         src/isopatric/render/RendererAPI.h
         src/isopatric/render/Shader.h
+        src/isopatric/render/Texture.h
         src/isopatric/render/VertexArray.h
         src/isopatric/render/VertexBuffer.h
         src/isopatric/render/opengl/IndexBuffer.cpp
@@ -82,6 +83,8 @@ set(ISOPATRIC_LIB_SRC
         src/isopatric/render/opengl/RendererAPI.h
         src/isopatric/render/opengl/Shader.cpp
         src/isopatric/render/opengl/Shader.h
+        src/isopatric/render/opengl/Texture.cpp
+        src/isopatric/render/opengl/Texture.h
         src/isopatric/render/opengl/VertexArray.cpp
         src/isopatric/render/opengl/VertexArray.h
         src/isopatric/render/opengl/VertexBuffer.cpp
