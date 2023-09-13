@@ -47,6 +47,12 @@ namespace isopatric::math {
         return glm::value_ptr(mMatrix);
     }
 
+    Matrix4 Matrix4::lookAt(const Vector3 &eye, const Vector3 &center, const Vector3 &up) {
+        return Matrix4{glm::lookAt(glm::vec3{eye.x, eye.y, eye.z},
+                                   glm::vec3{center.x, center.y, center.z},
+                                   glm::vec3{up.x, up.y, up.z})};
+    }
+
     Vector3 Matrix4::operator*(const Vector3 &other) {
         auto result = mMatrix * glm::vec4(other.x, other.y, other.z, 1);
         return {result.x, result.y, result.z};

@@ -149,7 +149,7 @@ public:
 
 private:
     isopatric::render::Renderer renderer{};
-    isopatric::render::Camera camera{};
+    isopatric::render::Camera camera{{0.0, 0.0, 3.0}, {-0.14, 0.0, 0.0}};
     std::shared_ptr<isopatric::render::Shader> mShader;
     std::shared_ptr<isopatric::render::VertexArray> mVertexArray;
     std::unique_ptr<isopatric::render::Texture> mTexture1;

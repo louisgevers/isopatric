@@ -32,6 +32,8 @@ namespace isopatric::math {
                 float zMin = 0.1f, float zMax = 100.0f);
         static Matrix4 perspective(float aspect, float fov = 0.7, float zMin = 0.1f, float zMax = 100.0f);
 
+        static Matrix4 lookAt(const Vector3 &eye, const Vector3 &center, const Vector3 &up);
+
         Matrix4 operator+(const Matrix4 &other) { return Matrix4{mMatrix + other.mMatrix}; }
         Matrix4 operator-(const Matrix4 &other) { return Matrix4{mMatrix - other.mMatrix}; }
         Matrix4 operator*(const Matrix4 &other) { return Matrix4{mMatrix * other.mMatrix}; }
