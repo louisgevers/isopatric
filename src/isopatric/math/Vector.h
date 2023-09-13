@@ -10,6 +10,11 @@ namespace isopatric::math {
 
         Vector3 rotate(Vector3 &euler) const;
 
+        Vector3 operator+(float scalar) const;
+        Vector3 operator-(float scalar) const;
+        Vector3 operator*(float scalar) const;
+        Vector3 operator/(float scalar) const;
+
         Vector3 operator+(const Vector3 &other) const;
         Vector3 operator-(const Vector3 &other) const;
 
@@ -17,6 +22,11 @@ namespace isopatric::math {
         Vector3 &operator-=(const Vector3 &other);
 
     };
+
+    Vector3 operator+(float scalar, const Vector3 &v);
+    Vector3 operator-(float scalar, const Vector3 &v);
+    Vector3 operator*(float scalar, const Vector3 &v);
+    Vector3 operator/(float scalar, const Vector3 &v);
 }
 
 #endif //ISOPATRIC_ISOPATRIC_MATH_VECTOR_H

@@ -18,6 +18,7 @@ namespace isopatric::math {
         glm::vec3 rotated = glm::rotate(glm::quat(glm::vec3{euler.x, euler.y, euler.z}), glm::vec3{x, y, z});
         return Vector3{rotated.x, rotated.y, rotated.z};
     }
+
     Vector3 Vector3::operator+(const Vector3 &other) const {
         return {x + other.x, y + other.y, z + other.z};
     }
@@ -39,4 +40,25 @@ namespace isopatric::math {
         this->z -= other.z;
         return *this;
     }
+
+    Vector3 Vector3::operator+(const float scalar) const {
+        return {x + scalar, y + scalar, z + scalar};
+    }
+
+    Vector3 Vector3::operator-(const float scalar) const {
+        return {x - scalar, y - scalar, z - scalar};
+    }
+
+    Vector3 Vector3::operator*(const float scalar) const {
+        return {x * scalar, y * scalar, z * scalar};
+    }
+
+    Vector3 Vector3::operator/(const float scalar) const {
+        return {x / scalar, y / scalar, z / scalar};
+    }
+
+    Vector3 operator+(const float scalar, const Vector3 &v) { return v + scalar; }
+    Vector3 operator-(const float scalar, const Vector3 &v) { return v - scalar; }
+    Vector3 operator*(const float scalar, const Vector3 &v) { return v * scalar; }
+    Vector3 operator/(const float scalar, const Vector3 &v) { return v / scalar; }
 }

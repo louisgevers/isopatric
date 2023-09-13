@@ -5,6 +5,9 @@
 class OpenGLExperimentLayer : public isopatric::core::Layer {
 public:
     void onAttach() override {
+        // Initialize input handling
+        mInput = isopatric::input::Input::create();
+
         // Cube (vec3 position - vec3 color - vec3 tex coord
         float vertices[] = {
                 // Face 1
@@ -134,10 +137,43 @@ public:
     void onEvent(isopatric::event::Event &event) override {
         isopatric::event::EventDispatcher dispatcher{event};
         dispatcher.dispatch<isopatric::event::WindowResizeEvent>(BIND_FN(onWindowResize));
+        dispatcher.dispatch<isopatric::event::KeyPressedEvent>(BIND_FN(onKeyPressed));
+        dispatcher.dispatch<isopatric::event::MouseMovedEvent>(BIND_FN(onMouseMoved));
     }
 
     bool onWindowResize(isopatric::event::WindowResizeEvent &event) {
         renderer.onWindowResize(event.getWidth(), event.getHeight());
+        return false;
+    }
+
+    bool onKeyPressed(isopatric::event::KeyPressedEvent &event) {
+        const float magnitude = 0.1f;
+        switch (event.getKeyCode()) {
+            case isopatric::input::UpArrow:
+                camera.translate(magnitude * camera.getUpDirection());
+                break;
+            case isopatric::input::DownArrow:
+                camera.translate(-magnitude * camera.getUpDirection());
+                break;
+            case isopatric::input::LeftArrow:
+                camera.translate(-magnitude * camera.getRightDirection());
+                break;
+            case isopatric::input::RightArrow:
+                camera.translate(magnitude * camera.getRightDirection());
+                break;
+            default:
+                break;
+        }
+        return false;
+    }
+
+    bool onMouseMoved(isopatric::event::MouseMovedEvent &event) {
+        if (mInput->isMouseButtonPressed(isopatric::input::MouseCode::MouseLeft)) {
+            const float magnitude = 0.005f;
+            // Move along x to rotate around y and vice versa
+            const isopatric::math::Vector3 rotation{(float) event.getMouseY(), (float) event.getMouseX(), 0.0};
+            camera.rotate(magnitude * rotation);
+        }
         return false;
     }
 
@@ -149,7 +185,9 @@ public:
 
 private:
     isopatric::render::Renderer renderer{};
-    isopatric::render::Camera camera{{0.0, 0.0, 3.0}, {-0.14, 0.0, 0.0}};
+    isopatric::render::Camera camera{{0.0,   0.0, 3.0},
+                                     {-0.14, 0.0, 0.0}};
+    std::unique_ptr<isopatric::input::Input> mInput;
     std::shared_ptr<isopatric::render::Shader> mShader;
     std::shared_ptr<isopatric::render::VertexArray> mVertexArray;
     std::unique_ptr<isopatric::render::Texture> mTexture1;

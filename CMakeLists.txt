@@ -77,6 +77,8 @@ set(ISOPATRIC_LIB_SRC_INPUT
         )
 
 set(ISOPATRIC_LIB_SRC_MATH
+        src/isopatric/math/Math.cpp
+        src/isopatric/math/Math.h
         src/isopatric/math/Matrix.cpp
         src/isopatric/math/Matrix.h
         src/isopatric/math/Vector.cpp

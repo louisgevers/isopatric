@@ -14,6 +14,21 @@ namespace isopatric::render {
 
         math::Matrix4 &getViewProjectionMatrix();
 
+        const math::Vector3 &getPosition() { return mPosition; }
+        void setPosition(math::Vector3 &position) {
+            mPosition = position;
+            updateMatrices();
+        }
+
+        const math::Vector3 &getOrientation() { return mOrientation; }
+        void setOrientation(math::Vector3 &orientation) {
+            mOrientation = orientation;
+            updateMatrices();
+        }
+
+        void translate(const math::Vector3 &t);
+        void rotate(const math::Vector3 &euler);
+
         math::Vector3 getUpDirection();
         math::Vector3 getForwardDirection();
         math::Vector3 getRightDirection();
@@ -24,7 +39,6 @@ namespace isopatric::render {
         math::Matrix4 mViewProjectionMatrix;
 
         void updateMatrices();
-
     };
 }
 

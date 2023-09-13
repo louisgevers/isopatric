@@ -6,6 +6,8 @@
 
 #include <isopatric/file/AssetReader.h>
 
+#include <isopatric/input/Input.h>
+
 #include <isopatric/math/Matrix.h>
 #include <isopatric/math/Vector.h>
 
