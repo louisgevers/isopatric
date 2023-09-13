@@ -4,10 +4,14 @@
 
 namespace isopatric::render {
 
-    void Renderer::beginScene() {}
+    void Renderer::beginScene(Camera &camera) {
+        mViewProjectionMatrix = camera.getViewProjectionMatrix();
+    }
 
     void Renderer::submit(const Ref <Shader> &shader, const Ref <VertexArray> &vertexArray) {
         shader->bind();
+        shader->setMatrix4("uViewProjection", mViewProjectionMatrix);
+
         vertexArray->bind();
         RenderCommand::drawIndexed(vertexArray);
     }

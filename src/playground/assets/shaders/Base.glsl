@@ -10,11 +10,10 @@ out vec3 myColor;
 out vec2 texCoord;
 
 uniform mat4 transform;
-uniform mat4 view;
-uniform mat4 projection;
+uniform mat4 uViewProjection;
 
 void main() {
-    gl_Position = projection * view * transform * vec4(aPos, 1.0);
+    gl_Position = uViewProjection * transform * vec4(aPos, 1.0);
     myColor = aColor;
     texCoord = aTexCoord;
 }

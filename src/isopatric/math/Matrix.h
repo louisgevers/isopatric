@@ -22,6 +22,8 @@ namespace isopatric::math {
         void scale(float x, float y, float z);
         void scale(const Vector3 &v);
 
+        Matrix4 inverse();
+
         const float *getElements() const;
 
         static Matrix4 orthographic(
@@ -29,6 +31,13 @@ namespace isopatric::math {
                 float yMin, float yMax,
                 float zMin = 0.1f, float zMax = 100.0f);
         static Matrix4 perspective(float aspect, float fov = 0.7, float zMin = 0.1f, float zMax = 100.0f);
+
+        Matrix4 operator+(const Matrix4 &other) { return Matrix4{mMatrix + other.mMatrix}; }
+        Matrix4 operator-(const Matrix4 &other) { return Matrix4{mMatrix - other.mMatrix}; }
+        Matrix4 operator*(const Matrix4 &other) { return Matrix4{mMatrix * other.mMatrix}; }
+        Matrix4 operator/(const Matrix4 &other) { return Matrix4{mMatrix / other.mMatrix}; }
+
+        Vector3 operator*(const Vector3 &other);
 
     private:
         explicit Matrix4(glm::mat4 matrix);

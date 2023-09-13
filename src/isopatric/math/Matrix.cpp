@@ -46,4 +46,13 @@ namespace isopatric::math {
     const float *Matrix4::getElements() const {
         return glm::value_ptr(mMatrix);
     }
+
+    Vector3 Matrix4::operator*(const Vector3 &other) {
+        auto result = mMatrix * glm::vec4(other.x, other.y, other.z, 1);
+        return {result.x, result.y, result.z};
+    }
+
+    Matrix4 Matrix4::inverse() {
+        return Matrix4{glm::inverse(mMatrix)};
+    }
 }

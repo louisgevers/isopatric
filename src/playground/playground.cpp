@@ -113,27 +113,20 @@ public:
         isopatric::render::RenderCommand::setClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         isopatric::render::RenderCommand::clear();
 
-        // 1. Transform matrix -> to world space
+        // Transform matrix -> to world space
         isopatric::math::Matrix4 transform;
         transform.rotate(mAngle, 1.0f, 0.0f, 0.0f);
         transform.rotate(0.7, 0.0f, 0.5f, 0.5f);
         transform.scale(0.5f, 0.5f, 0.5f);
-        // 2. View matrix -> to view space
-        isopatric::math::Matrix4 view;
-        view.translate(0.0f, 0.0f, -3.0f);
-        // 3. Projection matrix -> to clip space
-        auto projection = isopatric::math::Matrix4::perspective(800.0f / 600);
-        // Give them all to the shader
+        // Give them to the shader
         mShader->setMatrix4("transform", transform);
-        mShader->setMatrix4("view", view);
-        mShader->setMatrix4("projection", projection);
 
         // Bind textures on corresponding texture units
         mTexture1->bind(0);
         mTexture2->bind(1);
 
         // Draw with shader program
-        renderer.beginScene();
+        renderer.beginScene(camera);
         renderer.submit(mShader, mVertexArray);
         renderer.endScene();
     }
@@ -156,6 +149,7 @@ public:
 
 private:
     isopatric::render::Renderer renderer{};
+    isopatric::render::Camera camera{};
     std::shared_ptr<isopatric::render::Shader> mShader;
     std::shared_ptr<isopatric::render::VertexArray> mVertexArray;
     std::unique_ptr<isopatric::render::Texture> mTexture1;

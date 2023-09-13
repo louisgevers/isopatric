@@ -84,6 +84,8 @@ set(ISOPATRIC_LIB_SRC_MATH
         )
 
 set(ISOPATRIC_LIB_SRC_RENDER
+        src/isopatric/render/Camera.cpp
+        src/isopatric/render/Camera.h
         src/isopatric/render/IndexBuffer.h
         src/isopatric/render/RenderCommand.h
         src/isopatric/render/RenderContext.h
