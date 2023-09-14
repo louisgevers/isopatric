@@ -4,9 +4,7 @@
 
 namespace isopatric::render {
     Camera::Camera(math::Vector3 position, math::Vector3 orientation)
-            : mPosition(position), mOrientation(orientation) {
-        updateMatrices();
-    }
+            : mPosition(position), mOrientation(orientation) {}
 
     math::Matrix4 &Camera::getViewProjectionMatrix() {
         return mViewProjectionMatrix;
@@ -26,8 +24,8 @@ namespace isopatric::render {
 
     void Camera::updateMatrices() {
         auto view = math::Matrix4::lookAt(mPosition, mPosition + getForwardDirection(), getUpDirection());
-        auto projection = isopatric::math::Matrix4::perspective(800.0f / 600);
-        mViewProjectionMatrix = projection * view;
+        this->updateProjectionMatrix();
+        mViewProjectionMatrix = mProjectionMatrix * view;
     }
 
     math::Vector3 Camera::getUpDirection() {

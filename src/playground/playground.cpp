@@ -139,10 +139,12 @@ public:
         dispatcher.dispatch<isopatric::event::WindowResizeEvent>(BIND_FN(onWindowResize));
         dispatcher.dispatch<isopatric::event::KeyPressedEvent>(BIND_FN(onKeyPressed));
         dispatcher.dispatch<isopatric::event::MouseMovedEvent>(BIND_FN(onMouseMoved));
+        dispatcher.dispatch<isopatric::event::MouseScrolledEvent>(BIND_FN(onMouseScrolled));
     }
 
     bool onWindowResize(isopatric::event::WindowResizeEvent &event) {
         renderer.onWindowResize(event.getWidth(), event.getHeight());
+        camera.setScreenSize(event.getWidth(), event.getHeight());
         return false;
     }
 
@@ -168,12 +170,22 @@ public:
     }
 
     bool onMouseMoved(isopatric::event::MouseMovedEvent &event) {
+        const float magnitude = 0.005f;
         if (mInput->isMouseButtonPressed(isopatric::input::MouseCode::MouseLeft)) {
-            const float magnitude = 0.005f;
             // Move along x to rotate around y and vice versa
             const isopatric::math::Vector3 rotation{(float) event.getMouseY(), (float) event.getMouseX(), 0.0};
             camera.rotate(magnitude * rotation);
+        } else if (mInput->isMouseButtonPressed(isopatric::input::MouseCode::MouseRight)) {
+            const isopatric::math::Vector3 translation = (float) -event.getMouseX() * camera.getRightDirection() +
+                                                         (float) event.getMouseY() * camera.getUpDirection();
+            camera.translate(magnitude * translation);
         }
+        return false;
+    }
+
+    bool onMouseScrolled(isopatric::event::MouseScrolledEvent &event) {
+        const float magnitude = -0.1f * event.getYOffset();
+        camera.translate(magnitude * camera.getForwardDirection());
         return false;
     }
 
@@ -185,8 +197,14 @@ public:
 
 private:
     isopatric::render::Renderer renderer{};
-    isopatric::render::Camera camera{{0.0,   0.0, 3.0},
-                                     {-0.14, 0.0, 0.0}};
+    // TODO: intialize properly
+    isopatric::render::PerspectiveCamera camera{640,
+                                                480,
+                                                isopatric::render::DEFAULT_FOV,
+                                                isopatric::render::DEFAULT_Z_MIN,
+                                                isopatric::render::DEFAULT_Z_MAX,
+                                                {0.0, 0.0, 3.0},
+                                                {-0.14, 0.0, 0.0}};
     std::unique_ptr<isopatric::input::Input> mInput;
     std::shared_ptr<isopatric::render::Shader> mShader;
     std::shared_ptr<isopatric::render::VertexArray> mVertexArray;
