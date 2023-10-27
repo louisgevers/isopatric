@@ -13,6 +13,7 @@
 
 #include <isopatric/render/Camera.h>
 #include <isopatric/render/IndexBuffer.h>
+#include <isopatric/render/OrthographicCamera.h>
 #include <isopatric/render/PerspectiveCamera.h>
 #include <isopatric/render/RenderCommand.h>
 #include <isopatric/render/RenderContext.h>
